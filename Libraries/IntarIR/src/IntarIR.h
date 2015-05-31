@@ -1,5 +1,5 @@
 /**
- * @file       TagIR.h
+ * @file       IntarIR.h
  * @brief 	   Library for the Arduino-based laser tag system
  * @author     Shawn Hymel
  * @copyright  2015 Shawn Hymel
@@ -24,33 +24,34 @@
  * THE SOFTWARE.
  */
 
-#ifndef TagIR_H
-#define TagIR_H
+#ifndef IntarIR_H
+#define IntarIR_H
 
 #include <Arduino.h>
 
 // Debug switch
-#define DEBUG_TAGIR         0
+#define DEBUG_IR        0
 
 // Interrupt service routine
 #if defined(__AVR_ATmega328P__)
 ISR(TIMER2_OVF_vect);
 #endif
 
-// TagIR class
-class TagIR {
+// IntarIR class
+class IntarIR {
     
     // The ISR is our friend! It can call our private functions
 #if defined(__AVR_ATmega328P__)
     friend void TIMER2_OVF_vect();
-#elif defined(KINETISK)
+#elif defined(KINETISL)
     friend void ftm0_isr();
 #endif
  
 public:
-    TagIR();
-    ~TagIR();
-    bool begin(uint8_t tx_pin, uint8_t rx_pin);
+    IntarIR();
+    ~IntarIR();
+    bool begin();
+    void pulse(boolean on);
 
 private:
 
@@ -59,7 +60,7 @@ private:
 
 };
 
-// We need to declare a singular, global instance of our TagIR object
-extern TagIR Tag;
+// We need to declare a singular, global instance of our IntarIR object
+extern IntarIR Intar;
 
-#endif // TagIR_H
+#endif // IntarIR_H
