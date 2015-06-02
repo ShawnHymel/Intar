@@ -65,10 +65,10 @@ bool IntarIR::begin()
     // Set overflow value
     FTM0_SC = 0;
     FTM0_CNT = 0;
-    FTM0_MOD = 0xFFFF;
+    FTM0_MOD = MOD_COUNTER_VAL;
     
-    // Enable TOIE and set prescaler to 128
-    FTM0_SC = 0b011001111;
+    // Enable TOIE and set prescaler to 1
+    FTM0_SC = 0b011001000;
     
     // Enable PWM with set on reload and clear on match
     FTM0_C4SC = 0;
@@ -76,7 +76,7 @@ bool IntarIR::begin()
     FTM0_C4SC = 0b11101000;
     
     // We want 50% duty cycle PWM
-    FTM0_C4V = 0x7FFF;
+    FTM0_C4V = FTM0_MOD / 2;
     
     // Turn off IR LED initially
     pulse(false);
@@ -104,13 +104,13 @@ void IntarIR::pulse(boolean on)
 #if defined(__AVR_ATmega328p__)
 
 #elif defined(KINETISL)
-        *portConfigRegister(6) = PORT_PCR_MUX(4);
+        *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(4);
 #endif
     } else {
 #if defined(__AVR_ATmega328p__)
 
 #elif defined(KINETISL)
-        *portConfigRegister(6) = PORT_PCR_MUX(0);
+        *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(0);
 #endif
     }
 }

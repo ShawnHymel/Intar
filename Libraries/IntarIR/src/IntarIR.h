@@ -29,6 +29,24 @@
 
 #include <Arduino.h>
 
+// Pin constants
+#define IR_LED_PIN              6
+
+// Transmission constants
+#define MOD_FREQUENCY           38000   // 38 kHz modulation frequency
+#define XMIT_BLOCK_TIME         281     // Time per block (us)
+#define SOM_PULSE_BLOCKS        16       // Number of blocks in SOM pulse
+#define SOM_SPACE_BLOCKS        8       // Number of blocks in SOM space
+#define ZERO_PULSE_BLOCKS       1       // Number of blocks in '0' pulse
+#define ZERO_SPACE_BLOCKS       1       // Number of blocks in '0' space
+#define ONE_PULSE_BLOCKS        1       // Number of blocks in '1' pulse
+#define ONE_SPACE_BLOCKS        3       // Number of blocks in '1' space
+#define EOM_PULSE_BLOCKS        1       // Number of blocks in EOM pulse
+#define EOM_SPACE_BLOCKS        4       // Number of blocks in EOM space
+
+// Derived transmission parameters
+#define MOD_COUNTER_VAL         (F_CPU / (2 * MOD_FREQUENCY)) - 1
+
 // Debug switch
 #define DEBUG_IR        0
 
