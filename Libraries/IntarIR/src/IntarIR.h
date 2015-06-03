@@ -29,8 +29,15 @@
 
 #include <Arduino.h>
 
-// Pin constants
-#define IR_LED_PIN              6
+// Debug switch
+#define DEBUG_IR                 1
+
+// IR LED pin constant
+#if defined(__AVR_ATmega328P__)
+# define IR_LED_PIN              3       // Pin 3 on Arduino UNO, Pro Mini, etc.
+#elif defined(KINETISL)
+# define IR_LED_PIN              6       // Pin 6 on the Teensy LC
+#endif
 
 // Transmission constants
 #define MOD_FREQUENCY           38000   // 38 kHz modulation frequency
@@ -45,14 +52,15 @@
 #define EOM_SPACE_BLOCKS        4       // Number of blocks in EOM space
 
 // Derived transmission parameters
-#define MOD_COUNTER_VAL         (F_CPU / (2 * MOD_FREQUENCY)) - 1
-
-// Debug switch
-#define DEBUG_IR        0
+#if defined(__AVR_ATmega328P__)
+# define MOD_COUNTER_VAL        (F_CPU / (2 * MOD_FREQUENCY)) - 1
+#elif defined(KINETISL)
+# define MOD_COUNTER_VAL        (F_CPU / MOD_FREQUENCY) - 1
+#endif
 
 // Interrupt service routine
 #if defined(__AVR_ATmega328P__)
-ISR(TIMER2_OVF_vect);
+ISR(TIMER2_COMPB_vect);
 #endif
 
 // IntarIR class
@@ -60,7 +68,7 @@ class IntarIR {
     
     // The ISR is our friend! It can call our private functions
 #if defined(__AVR_ATmega328P__)
-    friend void TIMER2_OVF_vect();
+    friend void TIMER2_COMPB_vect();
 #elif defined(KINETISL)
     friend void ftm0_isr();
 #endif

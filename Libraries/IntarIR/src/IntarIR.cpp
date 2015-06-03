@@ -56,9 +56,31 @@ IntarIR::~IntarIR()
  */
 bool IntarIR::begin()
 {
+    pinMode(IR_LED_PIN, OUTPUT);
     
     // Set up the hardware PWM for the IR LED
-#if defined(__AVR_ATmega328p__)
+#if defined(__AVR_ATmega328P__)
+
+# if DEBUG_IR
+    Serial.print("a");
+    delay(100);
+# endif
+
+    // Method: http://forum.arduino.cc/index.php?topic=102430.0
+    // Use Timer 2 in Clear Timer on Compare (CTC) mode
+    TCCR2A = _BV(WGM21);      // Clear Timer on Compare (CTC)
+    TCCR2B = _BV (CS20);      // No prescaler
+    OCR2A = MOD_COUNTER_VAL;  // Only OCR2A has CTC
+    OCR2B = MOD_COUNTER_VAL;  // We don't have to set OCR2B, but we do
+    TIMSK2 = _BV(OCIE2B);     // Enable Timer2 OC B interrupts
+    sei();                    // Enable global interrupts
+
+    
+# if DEBUG_IR
+    Serial.print("b");
+    delay(100);
+# endif
+    
 
 #elif defined(KINETISL)
 
@@ -77,18 +99,14 @@ bool IntarIR::begin()
     
     // We want 50% duty cycle PWM
     FTM0_C4V = FTM0_MOD / 2;
-    
-    // Turn off IR LED initially
-    pulse(false);
 
 #else
     // Processor not supported
-# if DEBUG_IR
-    Serial.println("Processor not supported");
-# endif
     return false;
 #endif
-    
+ 
+    // Turn off IR LED initially
+    pulse(false);
     
     return true;
 }
@@ -101,14 +119,14 @@ bool IntarIR::begin()
 void IntarIR::pulse(boolean on)
 {
     if ( on ) {
-#if defined(__AVR_ATmega328p__)
-
+#if defined(__AVR_ATmega328P__)
+        TCCR2A |= _BV(COM2B0);
 #elif defined(KINETISL)
         *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(4);
 #endif
     } else {
-#if defined(__AVR_ATmega328p__)
-
+#if defined(__AVR_ATmega328P__)
+        TCCR2A &= ~(_BV(COM2B0));
 #elif defined(KINETISL)
         *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(0);
 #endif
@@ -132,7 +150,7 @@ void IntarIR::isr()
  * do this, we instantiate a IntarIR object globally in the .cpp file.
  **/
 #if defined(__AVR_ATmega328P__)
-ISR(TIMER2_OVF_vect)
+ISR(TIMER2_COMPB_vect)
 {
     Intar.isr();
 }
