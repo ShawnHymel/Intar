@@ -95,19 +95,24 @@ bool IntarIR::begin()
     FTM0_MOD = MOD_COUNTER_VAL;
     
     // Enable TOIE and set prescaler to 1
-    FTM0_SC = 0b011001000;
+    FTM0_SC = 0b11001000;
     
     // Enable PWM with set on reload and clear on match
     FTM0_C4SC = 0;
     delayMicroseconds(1);
-    FTM0_C4SC = 0b11101000;
+    FTM0_C4SC = 0b10101000;
     
     // We want 50% duty cycle PWM
     FTM0_C4V = FTM0_MOD / 2;
-
+    
+    // Set urgency of interrupt (0, 64, 128, or 192)
+    NVIC_SET_PRIORITY(IRQ_FTM0, 64);
+    
+    // Enable interrupt vector
+    NVIC_ENABLE_IRQ(IRQ_FTM0);
+    
 #else
-    // Processor not supported
-    return false;
+#error Processor not supported
 #endif
  
     // Turn off IR LED initially
@@ -281,7 +286,7 @@ void IntarIR::pulse(boolean on)
 #if defined(__AVR_ATmega328P__)
         TCCR2A &= ~(_BV(COM2B1));
 #elif defined(KINETISL)
-        *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(0);
+        *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(1);
 #endif
     }
 }
@@ -312,9 +317,13 @@ ISR(TIMER2_OVF_vect)
 {
     Intar_IR.isr();
 }
-#elif defined(KINETISK)
+#elif defined(KINETISL)
 void ftm0_isr(void)
 {
+    // Clear timer overflow flags
+    FTM0_SC |= (1 << 7);
+    
+    // Execute Intar IR's ISR
     Intar_IR.isr();
 }
 #endif

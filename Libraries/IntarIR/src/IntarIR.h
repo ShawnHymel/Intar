@@ -37,6 +37,8 @@
 # define IR_LED_PIN              3       // Pin 3 on Arduino UNO, Pro Mini, etc.
 #elif defined(KINETISL)
 # define IR_LED_PIN              6       // Pin 6 on the Teensy LC
+#else
+#error Processor not supported
 #endif
 
 // Protocol parameters
