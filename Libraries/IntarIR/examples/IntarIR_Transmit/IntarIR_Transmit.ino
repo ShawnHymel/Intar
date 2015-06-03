@@ -37,6 +37,10 @@ THE SOFTWARE.
 // Pins
 const int trigger_pin = 2;
 
+// Shot packet message
+byte shot_packet[] = {0x10, 0xEF, 0x08, 0xF7};
+uint8_t shot_packet_size = 4;
+
 void setup() {
   
   // Set up GPIO
@@ -46,7 +50,7 @@ void setup() {
   Serial.begin(9600);
 
   // Initialize Intar system
-  if ( Intar.begin() == false ) {
+  if ( Intar_IR.begin() == false ) {
     Serial.println(F("Could not start Intar IR."));
   }
 }
@@ -55,8 +59,7 @@ void loop() {
   
   // If the button is pushed, fire IR shot packets
   if ( digitalRead(trigger_pin) == 0 ) {
-    Intar.pulse(true);
-  } else {
-    Intar.pulse(false);
+    Intar_IR.xmit(shot_packet, shot_packet_size);
+    delay(1);
   }
 }
