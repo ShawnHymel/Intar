@@ -60,6 +60,5 @@ void loop() {
   // If the button is pushed, fire IR shot packets
   if ( digitalRead(trigger_pin) == 0 ) {
     Intar_IR.xmit(shot_packet, shot_packet_size);
-    delay(1);
   }
 }

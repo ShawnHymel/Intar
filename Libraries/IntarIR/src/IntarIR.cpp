@@ -129,18 +129,18 @@ bool IntarIR::begin()
  */
 void IntarIR::xmit(byte data[], uint8_t len)
 {
+    // Wait for previous transmission to finish
+    flushXmit();
+    
+    // Copy data to transmit buffer
+    memcpy(_xmit_buf, data, len);
+    
     // Reset global variables (e.g. counters)
     _xmit_block_counter = 0;
     _bit_pulse = true;
     _xmit_bit = 0;
     _xmit_byte = 0;
     _xmit_ptr = 0;
-    
-    // Copy data to transmit buffer
-    memcpy(_xmit_buf, data, len);
-
-    // Wait for previous transmission to finish
-    flushXmit();
     
     // Set up flags and data counter
     _bytes_to_send = len;
