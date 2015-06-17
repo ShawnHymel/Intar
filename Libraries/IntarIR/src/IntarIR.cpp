@@ -62,9 +62,10 @@ IntarIR::~IntarIR()
  * @param rx_pin Receive pin to use.
  * @return True on initialization success. False on failure.
  */
-bool IntarIR::begin()
+bool IntarIR::begin(uint8_t recv_pin /*= 0*/)
 {
     pinMode(IR_LED_PIN, OUTPUT);
+    _recv_pin = recv_pin;
     
     // Set up the hardware PWM for the IR LED
 #if defined(__AVR_ATmega328P__)
@@ -114,11 +115,38 @@ bool IntarIR::begin()
 #else
 #error Processor not supported
 #endif
+
+    // Disable receiver by default
+    _recv_enabled = false;
  
     // Turn off IR LED initially
     pulse(false);
     
     return true;
+}
+
+/**
+ * @brief Turn on the receiver
+ */
+void IntarIR::enableReceiver()
+{   
+    // Reset receiver parameters
+    _recv_state = RECV_STATE_WAITING;
+    _recv_tick_counter = 0;
+    _recv_raw_len = 0;
+    _recv_head = 0;
+    _recv_tail = 0;
+    
+    // Enable receiver
+    _recv_enabled = true;
+}
+
+/**
+ * @brief Turn off the receiver
+ */
+void IntarIR::disableReceiver()
+{
+    _recv_enabled = false;
 }
 
 /**
@@ -292,6 +320,73 @@ void IntarIR::pulse(boolean on)
 }
 
 /**
+ * @brief Store the tick counter value in the ring buffer
+ */
+void IntarIR::storeCounter()
+{
+    //***TODO***
+}
+
+/**
+ * @brief Receive IR packets asynchronously and store them in a buffer
+ */
+void IntarIR::doRecv()
+{
+    uint8_t ir;
+    
+    // Count our ticks every time
+    _recv_tick_counter++;
+    
+    // Sample
+    ir = (uint8_t)digitalRead(_recv_pin);
+    
+    // ***TODO: Handle buffer overflow?***
+    
+    switch( _recv_state ) {
+        
+        // Wait for a packet to start
+        case RECV_STATE_WAITING:
+            if ( ir == RECV_PULSE ) {
+                _recv_raw_len = 0;
+                _recv_tick_counter = 0;
+                _recv_state = RECV_STATE_PULSE;
+            }
+            break;
+            
+        // Pulse state
+        case RECV_STATE_PULSE:
+            if ( ir == RECV_SPACE ) {
+                storeCounter();
+                _recv_raw_len++;
+                _recv_tick_counter = 0;
+                _recv_state = RECV_STATE_SPACE;
+            }
+            break;
+        
+        // Space state
+        case RECV_STATE_SPACE:
+            if ( _recv_tick_counter >= RECV_EOM_SPACE_TICKS ) {
+                storeCounter();
+                _recv_raw_len++;
+                _recv_tick_counter = 0;
+                _recv_state = RECV_STATE_WAITING;
+            }
+            if ( ir == RECV_PULSE ) {
+                storeCounter();
+                _recv_raw_len++;
+                _recv_tick_counter = 0;
+                _recv_state = RECV_STATE_PULSE;
+            }
+            break;
+                
+            
+        // Unknown case
+        default:
+            break;
+    }
+}
+
+/**
  * @brief ISR for IntarIR
  *
  * Handle transmitting and receiving IR data. Each overflow is a "tick." Each
@@ -299,10 +394,16 @@ void IntarIR::pulse(boolean on)
  */
 void IntarIR::isr()
 {
+    // Measure ticks. Every block, perform the transmit function.
     _xmit_tick_counter++;
     if ( _xmit_tick_counter >= XMIT_TICKS_PER_BLOCK ) {
         _xmit_tick_counter = 0;
         doXmit();
+    }
+    
+    // If our receiver is enabled, perform receiver functions every tick
+    if ( _recv_enabled ) {
+        doRecv();
     }
 }
 

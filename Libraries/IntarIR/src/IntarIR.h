@@ -44,14 +44,14 @@
 // Protocol parameters
 #define MOD_FREQUENCY           38000   // 38 kHz modulation frequency
 #define XMIT_BLOCK_TIME         562     // Time per block (us)
-#define SOM_PULSE_BLOCKS        4       // Number of blocks in SOM pulse
+#define SOM_PULSE_BLOCKS        2       // Number of blocks in SOM pulse
 #define SOM_SPACE_BLOCKS        1       // Number of blocks in SOM space
 #define ZERO_PULSE_BLOCKS       1       // Number of blocks in '0' pulse
 #define ZERO_SPACE_BLOCKS       1       // Number of blocks in '0' space
 #define ONE_PULSE_BLOCKS        1       // Number of blocks in '1' pulse
 #define ONE_SPACE_BLOCKS        2       // Number of blocks in '1' space
 #define EOM_PULSE_BLOCKS        1       // Number of blocks in EOM pulse
-#define EOM_SPACE_BLOCKS        2       // Number of blocks in EOM space
+#define EOM_SPACE_BLOCKS        3       // Number of blocks in EOM space
 #define MAX_PACKET_SIZE         8       // Maximum number of bytes in a packet
 
 // Derived protocol parameters
@@ -66,6 +66,17 @@
 #define XMIT_STATE_MSG          3
 #define XMIT_STATE_EOM_PULSE    4
 #define XMIT_STATE_EOM_SPACE    5
+
+// Receiver constants
+#define RECV_PULSE              0       // Most IR receivers are active low
+#define RECV_SPACE              1       // Most IR receivers idle high
+#define RECV_RAW_BUF_SIZE       (MAX_PACKET_SIZE * 2) + 4
+#define RECV_MAX_PACKETS        8       // Size of ring buffer (num packets)
+#define RECV_EOM_SPACE_TICKS    (XMIT_TICKS_PER_BLOCK * EOM_SPACE_BLOCKS)
+#define RECV_STATE_WAITING      0
+#define RECV_STATE_PULSE        1
+#define RECV_STATE_SPACE        2
+#define RECV_STATE_STOP         3
 
 // Other constants
 #define BITS_PER_BYTE           8
@@ -88,7 +99,9 @@ class IntarIR {
 public:
     IntarIR();
     ~IntarIR();
-    bool begin();
+    bool begin(uint8_t recv_pin = 0);
+    void enableReceiver();
+    void disableReceiver();
     void xmit(byte data[], uint8_t len);
 
 private:
@@ -97,11 +110,15 @@ private:
     void flushXmit();
     void doXmit();
     void pulse(boolean on);
+    
+    // IR receive
+    void doRecv();
+    void storeCounter();
 
     // Interrupt service routing that is called by the system's ISR
     inline void isr();
 
-    // Members for transmission
+    // Members for transmitter
     volatile uint8_t _xmit_tick_counter;
     volatile int8_t _xmit_block_counter;
     volatile uint8_t _xmit_state;
@@ -111,6 +128,17 @@ private:
     volatile uint8_t _bytes_to_send;
     volatile int8_t _xmit_ptr;
     byte _xmit_buf[XMIT_BUF_SIZE];
+    
+    // Members for receiver
+    uint8_t _recv_pin;
+    volatile boolean _recv_enabled;
+    volatile uint16_t _recv_tick_counter;
+    volatile uint8_t _recv_state;
+    volatile uint16_t _recv_raw_len;
+    volatile uint16_t _recv_buffer[RECV_RAW_BUF_SIZE * RECV_MAX_PACKETS];
+    volatile uint8_t _recv_head;
+    volatile uint8_t _recv_tail;
+    volatile boolean _recv_cir_overflow;
 };
 
 // We need to declare a singular, global instance of our IntarIR object
