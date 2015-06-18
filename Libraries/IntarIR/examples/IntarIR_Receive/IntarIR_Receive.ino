@@ -39,6 +39,9 @@ const int receiver_pin = 11;
 byte shot_packet[] = {0x10, 0xEF, 0x08, 0xF7};
 uint8_t shot_packet_size = 4;
 
+// Packet buffer
+uint16_t packet[RECV_RAW_PACKET_SIZE];
+
 void setup() {
   
   // Start serial console for debugging
@@ -54,5 +57,15 @@ void setup() {
 }
 
 void loop() {
-
+  
+  // Check if we have any packets and print them
+  if ( Intar_IR.available() ) {
+    memset(packet, 0, RECV_RAW_PACKET_SIZE);
+    Intar_IR.read(packet);
+    for ( int i = 0; i < RECV_RAW_PACKET_SIZE; i++ ) {
+      Serial.print(packet[i], DEC);
+      Serial.print(" ");
+    }
+    Serial.println();
+  }
 }

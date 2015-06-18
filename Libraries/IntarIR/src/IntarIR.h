@@ -70,13 +70,19 @@
 // Receiver constants
 #define RECV_PULSE              0       // Most IR receivers are active low
 #define RECV_SPACE              1       // Most IR receivers idle high
-#define RECV_RAW_BUF_SIZE       (MAX_PACKET_SIZE * 2) + 4
+#define RECV_RAW_PACKET_SIZE    (MAX_PACKET_SIZE * 2) + 4
 #define RECV_MAX_PACKETS        8       // Size of ring buffer (num packets)
 #define RECV_EOM_SPACE_TICKS    (XMIT_TICKS_PER_BLOCK * EOM_SPACE_BLOCKS)
 #define RECV_STATE_WAITING      0
 #define RECV_STATE_PULSE        1
 #define RECV_STATE_SPACE        2
 #define RECV_STATE_STOP         3
+
+// Overflow states
+#define NO_OVERFLOW             0
+#define PACKET_OVERFLOW         1
+#define RING_OVERFLOW           2
+#define BOTH_OVERFLOW           3
 
 // Other constants
 #define BITS_PER_BYTE           8
@@ -103,6 +109,9 @@ public:
     void enableReceiver();
     void disableReceiver();
     void xmit(byte data[], uint8_t len);
+    uint8_t available();
+    uint8_t overflow();
+    boolean read(uint16_t packet[RECV_RAW_PACKET_SIZE]);
 
 private:
 
@@ -134,11 +143,12 @@ private:
     volatile boolean _recv_enabled;
     volatile uint16_t _recv_tick_counter;
     volatile uint8_t _recv_state;
-    volatile uint16_t _recv_raw_len;
-    volatile uint16_t _recv_buffer[RECV_RAW_BUF_SIZE * RECV_MAX_PACKETS];
+    volatile uint16_t _recv_raw_ptr;
+    uint16_t _recv_buffer[RECV_RAW_PACKET_SIZE * RECV_MAX_PACKETS];
     volatile uint8_t _recv_head;
     volatile uint8_t _recv_tail;
-    volatile boolean _recv_cir_overflow;
+    volatile boolean _recv_packet_overflow;
+    volatile boolean _recv_ring_overflow;
 };
 
 // We need to declare a singular, global instance of our IntarIR object
