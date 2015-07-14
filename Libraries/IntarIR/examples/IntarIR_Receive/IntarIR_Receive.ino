@@ -34,23 +34,32 @@ THE SOFTWARE.
 
 // Pins
 const int receiver_pin = 11;
+const int hit_pin = 13;
 
 // Shot packet message
 byte shot_packet[] = {0x10, 0xEF, 0x08, 0xF7};
 uint8_t shot_packet_size = 4;
 
 // Packet buffer
-uint16_t packet[RECV_RAW_PACKET_SIZE];
+uint8_t packet[MAX_PACKET_SIZE];
+uint8_t num_bytes;
 
 void setup() {
   
   // Start serial console for debugging
   Serial.begin(9600);
+  
+  // Set pin modes
+  pinMode(receiver_pin, INPUT);
+  pinMode(hit_pin, OUTPUT);
+  digitalWrite(hit_pin, LOW);
 
   // Initialize Intar system
   if ( Intar_IR.begin(receiver_pin) == false ) {
     Serial.println(F("Could not start Intar IR."));
+    while(1);
   }
+  Serial.println(F("Receiver initialized. Don't tase me, bro!"));
   
   // Enable receiver
   Intar_IR.enableReceiver();
@@ -60,12 +69,23 @@ void loop() {
   
   // Check if we have any packets and print them
   if ( Intar_IR.available() ) {
-    memset(packet, 0, RECV_RAW_PACKET_SIZE);
-    Intar_IR.read(packet);
-    for ( int i = 0; i < RECV_RAW_PACKET_SIZE; i++ ) {
-      Serial.print(packet[i], DEC);
-      Serial.print(" ");
+    memset(packet, 0, MAX_PACKET_SIZE);
+    num_bytes = Intar_IR.read(packet);
+    if ( num_bytes == 0 ) {
+        Serial.println("PACKET EMPTY");
+    } else if ( num_bytes == RECV_ERROR ) {
+        Serial.println("RECV ERROR");
+    } else {
+        for ( int i = 0; i < num_bytes; i++ ) {
+            Serial.print(packet[i], HEX);
+            Serial.print(" ");
+            if ( memcmp(packet, shot_packet, num_bytes) == 0 ) {
+              digitalWrite(hit_pin, HIGH);
+              delay(10);
+              digitalWrite(hit_pin, LOW);
+            }
+        }
+      Serial.println();
     }
-    Serial.println();
   }
 }

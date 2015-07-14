@@ -46,16 +46,18 @@
 #define XMIT_BLOCK_TIME         562     // Time per block (us)
 #define SOM_PULSE_BLOCKS        2       // Number of blocks in SOM pulse
 #define SOM_SPACE_BLOCKS        1       // Number of blocks in SOM space
-#define ZERO_PULSE_BLOCKS       1       // Number of blocks in '0' pulse
+#define BIT_PULSE_BLOCKS        1       // Number of blocks in SOM bit
 #define ZERO_SPACE_BLOCKS       1       // Number of blocks in '0' space
-#define ONE_PULSE_BLOCKS        1       // Number of blocks in '1' pulse
 #define ONE_SPACE_BLOCKS        2       // Number of blocks in '1' space
 #define EOM_PULSE_BLOCKS        1       // Number of blocks in EOM pulse
 #define EOM_SPACE_BLOCKS        3       // Number of blocks in EOM space
 #define MAX_PACKET_SIZE         8       // Maximum number of bytes in a packet
 
 // Derived protocol parameters
+#define ZERO_PULSE_BLOCKS       BIT_PULSE_BLOCKS    // Blocks in '0' pulse
+#define ONE_PULSE_BLOCKS        BIT_PULSE_BLOCKS    // Blocks in '1' pulse
 #define MOD_COUNTER_VAL         (F_CPU / MOD_FREQUENCY) - 1
+#define TICK_TIME               (1000000 / MOD_FREQUENCY) // Time per tick (us)
 #define XMIT_TICKS_PER_BLOCK    (XMIT_BLOCK_TIME / (1000000 / MOD_FREQUENCY))
 
 // Transmission constants
@@ -70,19 +72,39 @@
 // Receiver constants
 #define RECV_PULSE              0       // Most IR receivers are active low
 #define RECV_SPACE              1       // Most IR receivers idle high
-#define RECV_RAW_PACKET_SIZE    (MAX_PACKET_SIZE * 2) + 4
+#define RECV_TICKS_PER_SAMPLE	5		// Number of ticks between samples
+#define RECV_SAMPLE_MAX			200		// Maximum number of samples to record
 #define RECV_MAX_PACKETS        8       // Size of ring buffer (num packets)
-#define RECV_EOM_SPACE_TICKS    (XMIT_TICKS_PER_BLOCK * EOM_SPACE_BLOCKS)
-#define RECV_STATE_WAITING      0
-#define RECV_STATE_PULSE        1
-#define RECV_STATE_SPACE        2
-#define RECV_STATE_STOP         3
+#define RECV_STATE_IDLE         0
+#define RECV_STATE_SOM_PULSE    1
+#define RECV_STATE_SOM_SPACE    2
+#define RECV_STATE_BIT_PULSE    3
+#define RECV_STATE_BIT_SPACE    4
+#define RECV_ERROR              0xFF
 
-// Overflow states
-#define NO_OVERFLOW             0
-#define PACKET_OVERFLOW         1
-#define RING_OVERFLOW           2
-#define BOTH_OVERFLOW           3
+// Receiver: samples per block (min and max)
+#define RECV_SOM_PULSE_MIN     ((SOM_PULSE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) - 1
+#define RECV_SOM_PULSE_MAX     ((SOM_PULSE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) + 2
+#define RECV_SOM_SPACE_MIN     ((SOM_SPACE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) - 1
+#define RECV_SOM_SPACE_MAX     ((SOM_SPACE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) + 2
+#define RECV_BIT_PULSE_MIN     ((BIT_PULSE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) - 1
+#define RECV_BIT_PULSE_MAX     ((BIT_PULSE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) + 2
+#define RECV_ZERO_SPACE_MIN    ((ZERO_SPACE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) - 1
+#define RECV_ZERO_SPACE_MAX    ((ZERO_SPACE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) + 2
+#define RECV_ONE_SPACE_MIN     ((ONE_SPACE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) - 1
+#define RECV_ONE_SPACE_MAX     ((ONE_SPACE_BLOCKS * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) + 2
+#define RECV_IDLE_SPACE_MIN    (((ONE_SPACE_BLOCKS + 1) * XMIT_BLOCK_TIME) / \
+                                (RECV_TICKS_PER_SAMPLE * TICK_TIME)) - 1
 
 // Other constants
 #define BITS_PER_BYTE           8
@@ -106,13 +128,20 @@ public:
     IntarIR();
     ~IntarIR();
     bool begin(uint8_t recv_pin = 0);
+    void enableTransmitter();
+    void disableTransmitter();
     void enableReceiver();
     void disableReceiver();
     void xmit(byte data[], uint8_t len);
     uint8_t available();
-    uint8_t overflow();
-    boolean read(uint16_t packet[RECV_RAW_PACKET_SIZE]);
-
+    boolean overflow();
+    uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);
+    
+    //***TEST***
+    volatile int testvar;
+    volatile int test_1;
+    volatile int test_2;
+	
 private:
 
     // IR transmission
@@ -122,12 +151,15 @@ private:
     
     // IR receive
     void doRecv();
-    void storeCounter();
+    void storeBit(uint8_t recv_bit);
+    void storePacket();
+    void handleRecvError();
 
     // Interrupt service routing that is called by the system's ISR
     inline void isr();
 
     // Members for transmitter
+    volatile boolean _xmit_enabled;
     volatile uint8_t _xmit_tick_counter;
     volatile int8_t _xmit_block_counter;
     volatile uint8_t _xmit_state;
@@ -142,12 +174,14 @@ private:
     uint8_t _recv_pin;
     volatile boolean _recv_enabled;
     volatile uint16_t _recv_tick_counter;
+	volatile uint16_t _recv_sample_counter;
     volatile uint8_t _recv_state;
-    volatile uint16_t _recv_raw_ptr;
-    uint16_t _recv_buffer[RECV_RAW_PACKET_SIZE * RECV_MAX_PACKETS];
+    volatile uint8_t _recv_bit_ptr;
+    volatile uint8_t _recv_byte_ptr;
+    uint8_t _recv_bytes[RECV_MAX_PACKETS];
+	uint8_t _recv_buffer[MAX_PACKET_SIZE * RECV_MAX_PACKETS];
     volatile uint8_t _recv_head;
     volatile uint8_t _recv_tail;
-    volatile boolean _recv_packet_overflow;
     volatile boolean _recv_ring_overflow;
 };
 

@@ -1,6 +1,6 @@
 /**
  * @file       IntarIR.cpp
- * @brief 	   Library for the Arduino-based laser tag system
+ * @brief      Library for the Arduino-based laser tag system
  * @author     Shawn Hymel
  * @copyright  2015 Shawn Hymel
  * @license    http://opensource.org/licenses/MIT
@@ -36,15 +36,7 @@ IntarIR Intar_IR;
  */
 IntarIR::IntarIR()
 {
-    // Initialize transmission members
-    _xmit_tick_counter = 0;
-    _xmit_block_counter = 0;
-    _xmit_state = XMIT_STATE_WAITING;
-    _bit_pulse = true;
-    _xmit_bit = 0;
-    _xmit_byte = 0;
-    _bytes_to_send = 0;
-    _xmit_ptr = -1;
+    
 }
 
 /**
@@ -64,7 +56,6 @@ IntarIR::~IntarIR()
  */
 bool IntarIR::begin(uint8_t recv_pin /*= 0*/)
 {
-    pinMode(IR_LED_PIN, OUTPUT);
     _recv_pin = recv_pin;
     
     // Set up the hardware PWM for the IR LED
@@ -116,14 +107,45 @@ bool IntarIR::begin(uint8_t recv_pin /*= 0*/)
 #error Processor not supported
 #endif
 
-    // Disable receiver by default
+    // Disable and transmitter receiver by default
+    _xmit_enabled = false;
     _recv_enabled = false;
- 
-    // Turn off IR LED initially
-    pulse(false);
     
     return true;
 }
+
+/**
+ * @brief Turn on the IR LED transmitter
+ */
+void IntarIR::enableTransmitter()
+{
+    // Set LED as output and turn off initially
+    pinMode(IR_LED_PIN, OUTPUT);
+    pulse(false);
+    
+    // Initialize transmission members
+    _xmit_tick_counter = 0;
+    _xmit_block_counter = 0;
+    _xmit_state = XMIT_STATE_WAITING;
+    _bit_pulse = true;
+    _xmit_bit = 0;
+    _xmit_byte = 0;
+    _bytes_to_send = 0;
+    _xmit_ptr = -1;
+    
+    // Enable transmitter
+    _xmit_enabled = true;
+}
+
+/**
+ * @brief Turn off the transmitter
+ */
+void IntarIR::disableTransmitter()
+{
+    _xmit_enabled = false;
+}
+  
+
 
 /**
  * @brief Turn on the receiver
@@ -131,13 +153,22 @@ bool IntarIR::begin(uint8_t recv_pin /*= 0*/)
 void IntarIR::enableReceiver()
 {   
     // Reset receiver parameters
-    _recv_state = RECV_STATE_WAITING;
+    _recv_state = RECV_STATE_IDLE;
     _recv_tick_counter = 0;
-    _recv_raw_ptr = 0;
+    _recv_sample_counter = 0;
+    _recv_bit_ptr = 0;
+    _recv_byte_ptr = 0;
     _recv_head = 0;
     _recv_tail = 0;
-    _recv_packet_overflow = false;
     _recv_ring_overflow = false;
+
+    // Clear received bytes array
+    memset(_recv_bytes, 0, RECV_MAX_PACKETS);
+    
+    //***TEST***
+    testvar = 0;
+    test_1 = 0;
+    test_2 = 0;
     
     // Enable receiver
     _recv_enabled = true;
@@ -188,38 +219,47 @@ uint8_t IntarIR::available()
 }
 
 /**
- * @brief Determines if the receiver has overflowed
+ * @brief Determines if the receiver ring buffer has overflowed
  *
- * @return b00 for no overflow, b01 for packet overflow, b10 for ring overflow
+ * @return True for overflow. False for all normal.
  */
-uint8_t IntarIR::overflow()
+boolean IntarIR::overflow()
 {
-    boolean p_ovf = _recv_packet_overflow;
-    boolean r_ovf = _recv_ring_overflow;
-    uint8_t ret = ((uint8_t)r_ovf << 1) || (uint8_t)p_ovf;
-    
-    return ret;
+    return _recv_ring_overflow;
 }
 
 /**
  * @brief Read the next packet from the ring buffer
  *
  * @param[out] packet pointer to buffer to store the read packet
- * @return True if successful read. False if buffer is empty.
+ * @return RECV_ERROR (-1) on error. Number of bytes in packet otherwise.
  */
-boolean IntarIR::read(uint16_t packet[RECV_RAW_PACKET_SIZE])
+uint8_t IntarIR::read(uint8_t packet[MAX_PACKET_SIZE])
 {
+    uint8_t num_bytes;
+    
     // Return if empty buffer
     if ( _recv_head == _recv_tail ) {
-        return false;
+        return 0;
+    }
+    
+    // Read in number of bytes in packet. Check if it is an error.
+    num_bytes = _recv_bytes[_recv_tail];
+    if ( num_bytes == RECV_ERROR ) {
+        return RECV_ERROR;
     }
     
     // Copy packet and update tail
-    memcpy(packet, _recv_buffer + (RECV_RAW_PACKET_SIZE * _recv_tail), 
-                                                    RECV_RAW_PACKET_SIZE);
+    memcpy(packet, _recv_buffer + (_recv_tail * MAX_PACKET_SIZE), 
+                                                            MAX_PACKET_SIZE);
     _recv_tail = (_recv_tail + 1) % RECV_MAX_PACKETS;
     
-    return true;
+    // If we had a ring buffer overflow, clear the flag
+    if ( _recv_ring_overflow ) {
+        _recv_ring_overflow = false;
+    }
+    
+    return num_bytes;
 }
  
 /**
@@ -367,13 +407,63 @@ void IntarIR::pulse(boolean on)
 }
 
 /**
- * @brief Store the tick counter value in the ring buffer
+ * @brief Writes a 1 or 0 to the receiver buffer
  */
-void IntarIR::storeCounter()
+void IntarIR::storeBit(uint8_t recv_bit)
 {
-    _recv_buffer[(RECV_RAW_PACKET_SIZE * _recv_head) + _recv_raw_ptr] = 
-                                                        _recv_tick_counter;
-    _recv_raw_ptr++;
+    uint8_t current_byte;
+    
+    // Store bit
+    current_byte = _recv_buffer[(_recv_head * MAX_PACKET_SIZE) + 
+                                                        _recv_byte_ptr];
+    if ( recv_bit ) {
+        _recv_buffer[(_recv_head * MAX_PACKET_SIZE) + _recv_byte_ptr] =
+                                    current_byte | (0x80 >> _recv_bit_ptr);
+    } else {
+        _recv_buffer[(_recv_head * MAX_PACKET_SIZE) + _recv_byte_ptr] =
+                                    current_byte & ~(0x80 >> _recv_bit_ptr);
+    }
+    
+    // Increase pointers
+    _recv_bit_ptr++;
+    if ( _recv_bit_ptr >= BITS_PER_BYTE ) {
+        _recv_bit_ptr = 0;
+        _recv_byte_ptr++;
+        
+        // Check for packet overflow
+        if ( _recv_byte_ptr >= MAX_PACKET_SIZE ) {
+            handleRecvError();
+            _recv_state = RECV_STATE_IDLE;
+        }
+    }
+}
+
+/**
+ * @brief Stores number of bytes received and increments head
+ */
+void IntarIR::storePacket()
+{  
+    // Store number of bytes received and increment ring buffer head
+    if ( (_recv_head + 1) % RECV_MAX_PACKETS != _recv_tail ) {
+        _recv_bytes[_recv_head] = _recv_byte_ptr;
+        _recv_head = (_recv_head + 1) % RECV_MAX_PACKETS;
+    } else {
+        _recv_ring_overflow = true;
+    }
+}
+
+/**
+ * @brief Stores error in "number of bytes" array and increments head
+ */
+void IntarIR::handleRecvError()
+{
+    // Store error and increment ring buffer head
+    if ( (_recv_head + 1) % RECV_MAX_PACKETS != _recv_tail ) {
+        _recv_bytes[_recv_head] = RECV_ERROR;
+        _recv_head = (_recv_head + 1) % RECV_MAX_PACKETS;
+    } else {
+        _recv_ring_overflow = true;
+    }
 }
 
 /**
@@ -383,63 +473,114 @@ void IntarIR::doRecv()
 {
     uint8_t ir;
     
-    // Count our ticks every time
-    _recv_tick_counter++;
-    
-    // Sample
-    ir = (uint8_t)digitalRead(_recv_pin);
-    
-    // Handle packet buffer overflow
-    if ( _recv_raw_ptr >= RECV_RAW_PACKET_SIZE ) {
-        _recv_packet_overflow = true;
-        _recv_tick_counter = 0;
-        _recv_state = RECV_STATE_WAITING;
+    // Increment the sample counter every time we sample
+    _recv_sample_counter++;
+    if ( _recv_sample_counter >= RECV_SAMPLE_MAX ) {
+        _recv_sample_counter = RECV_SAMPLE_MAX;
     }
     
-    switch( _recv_state ) {
+    // Sample the receiver
+    ir = (uint8_t)digitalRead(_recv_pin);
+    
+    // The receiver state machine
+    switch ( _recv_state ) {
         
-        // Wait for a packet to start
-        case RECV_STATE_WAITING:
+        // Do nothing. If we see an edge, start recording.
+        case RECV_STATE_IDLE:
             if ( ir == RECV_PULSE ) {
-                _recv_raw_ptr = 0;
-                _recv_tick_counter = 0;
-                _recv_state = RECV_STATE_PULSE;
+                _recv_sample_counter = 0;
+                _recv_state = RECV_STATE_SOM_PULSE;
             }
             break;
             
-        // Pulse state
-        case RECV_STATE_PULSE:
+        // Wait until th end of the pulse and check if it's a SOF pulse
+        case RECV_STATE_SOM_PULSE:
             if ( ir == RECV_SPACE ) {
-                storeCounter();
-                _recv_raw_ptr++;
-                _recv_tick_counter = 0;
-                _recv_state = RECV_STATE_SPACE;
-            }
-            break;
-        
-        // Space state
-        case RECV_STATE_SPACE:
-            if ( _recv_tick_counter >= RECV_EOM_SPACE_TICKS ) {
-                if ( (_recv_head + 1) % RECV_MAX_PACKETS != _recv_tail ) {
-                    _recv_head = (_recv_head + 1) % RECV_MAX_PACKETS;
-                } else {
-                    _recv_ring_overflow = true;
-                }
-                _recv_tick_counter = 0;
-                _recv_state = RECV_STATE_WAITING;
-            }
-            if ( ir == RECV_PULSE ) {
-                storeCounter();
-                _recv_raw_ptr++;
-                _recv_tick_counter = 0;
-                _recv_state = RECV_STATE_PULSE;
-            }
-            break;
                 
-            
-        // Unknown case
-        default:
+                // If pulse length is acceptable, move on to SOF space
+                if ( (_recv_sample_counter >= RECV_SOM_PULSE_MIN) &&
+                     ( _recv_sample_counter <= RECV_SOM_PULSE_MAX) ) {
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_SOM_SPACE;
+                } else {
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_IDLE;
+                }
+            }
             break;
+            
+        // Wait until end of SOF space
+        case RECV_STATE_SOM_SPACE:
+            if ( ir == RECV_PULSE ) {
+                
+                // If space length is acceptable, move on to hit pulse
+                if ( (_recv_sample_counter >= RECV_SOM_SPACE_MIN) &&
+                      (_recv_sample_counter <= RECV_SOM_SPACE_MAX) ) {
+                    _recv_byte_ptr = 0;
+                    _recv_bit_ptr = 0;
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_BIT_PULSE;
+                } else {
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_IDLE;
+                }
+            }
+            break;
+            
+        // Wait until the end of the bit pulse
+        case RECV_STATE_BIT_PULSE:
+            if ( ir == RECV_SPACE ) {
+                
+                // If the bit pulse length is acceptable, move on to bit space
+                if ( (_recv_sample_counter >= RECV_BIT_PULSE_MIN) &&
+                     (_recv_sample_counter <= RECV_BIT_PULSE_MAX) ) {
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_BIT_SPACE;
+                } else if ( (_recv_sample_counter >= RECV_SOM_PULSE_MIN) &&
+                            (_recv_sample_counter <= RECV_SOM_PULSE_MAX) ) {
+                    storePacket();
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_SOM_SPACE;
+                } else {
+                    handleRecvError();
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_IDLE;
+                }
+            }
+            break;
+            
+        // Wait until end of bit space and store bit (or end receive mode)
+        case RECV_STATE_BIT_SPACE:
+            if ( ir == RECV_PULSE ) {
+                
+                // Determine the bit based on the space
+                if ( (_recv_sample_counter >= RECV_ZERO_SPACE_MIN) &&
+                     (_recv_sample_counter <= RECV_ZERO_SPACE_MAX) ) {
+                    storeBit(0);
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_BIT_PULSE;
+                } else if ( (_recv_sample_counter >= RECV_ONE_SPACE_MIN) &&
+                            (_recv_sample_counter <= RECV_ONE_SPACE_MAX) ) {
+                    storeBit(1);
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_BIT_PULSE;
+                } else {
+                    handleRecvError();
+                    _recv_sample_counter = 0;
+                    _recv_state = RECV_STATE_IDLE;
+                }
+            } else if ( _recv_sample_counter >= RECV_IDLE_SPACE_MIN ) {
+                storePacket();
+                _recv_sample_counter = 0;
+                _recv_state = RECV_STATE_IDLE;
+            }
+            break;
+            
+        // Unknown state. Store error and go to idle state.
+        default:
+            handleRecvError();
+            _recv_sample_counter = 0;
+            _recv_state = RECV_STATE_IDLE;
     }
 }
 
@@ -451,15 +592,18 @@ void IntarIR::doRecv()
  */
 void IntarIR::isr()
 {
+    
     // Measure ticks. Every block, perform the transmit function.
     _xmit_tick_counter++;
-    if ( _xmit_tick_counter >= XMIT_TICKS_PER_BLOCK ) {
+    if ( _xmit_enabled && (_xmit_tick_counter >= XMIT_TICKS_PER_BLOCK) ) {
         _xmit_tick_counter = 0;
         doXmit();
     }
     
-    // If our receiver is enabled, perform receiver functions every tick
-    if ( _recv_enabled ) {
+    // If our receiver is enabled, count to receiver sample
+    _recv_tick_counter++;
+    if ( _recv_enabled && (_recv_tick_counter >= RECV_TICKS_PER_SAMPLE) ) {
+        _recv_tick_counter = 0;
         doRecv();
     }
 }
