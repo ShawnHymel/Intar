@@ -165,11 +165,6 @@ void IntarIR::enableReceiver()
     // Clear received bytes array
     memset(_recv_bytes, 0, RECV_MAX_PACKETS);
     
-    //***TEST***
-    testvar = 0;
-    test_1 = 0;
-    test_2 = 0;
-    
     // Enable receiver
     _recv_enabled = true;
 }
@@ -243,16 +238,20 @@ uint8_t IntarIR::read(uint8_t packet[MAX_PACKET_SIZE])
         return 0;
     }
     
-    // Read in number of bytes in packet. Check if it is an error.
+    // Read in number of bytes in packet
     num_bytes = _recv_bytes[_recv_tail];
+    
+    // Copy packet and update tail
+    if ( num_bytes != RECV_ERROR ) {
+        memcpy(packet, _recv_buffer + (_recv_tail * MAX_PACKET_SIZE), 
+                                                            MAX_PACKET_SIZE);
+    }
+    _recv_tail = (_recv_tail + 1) % RECV_MAX_PACKETS;
+    
+    // If we had a packet error, return with that
     if ( num_bytes == RECV_ERROR ) {
         return RECV_ERROR;
     }
-    
-    // Copy packet and update tail
-    memcpy(packet, _recv_buffer + (_recv_tail * MAX_PACKET_SIZE), 
-                                                            MAX_PACKET_SIZE);
-    _recv_tail = (_recv_tail + 1) % RECV_MAX_PACKETS;
     
     // If we had a ring buffer overflow, clear the flag
     if ( _recv_ring_overflow ) {

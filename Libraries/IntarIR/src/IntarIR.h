@@ -136,11 +136,6 @@ public:
     uint8_t available();
     boolean overflow();
     uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);
-    
-    //***TEST***
-    volatile int testvar;
-    volatile int test_1;
-    volatile int test_2;
 	
 private:
 
