@@ -1,6 +1,6 @@
 /**
- * @file       IntarIR.h
- * @brief 	   Library for the Arduino-based laser tag system
+ * @file       IntarPhys.h
+ * @brief 	   Library for the IR physical layer in Arduino-based laser tag
  * @author     Shawn Hymel
  * @copyright  2015 Shawn Hymel
  * @license    http://opensource.org/licenses/MIT
@@ -24,13 +24,13 @@
  * THE SOFTWARE.
  */
 
-#ifndef IntarIR_H
-#define IntarIR_H
+#ifndef IntarPhys_H
+#define IntarPhys_H
 
 #include <Arduino.h>
 
 // Debug switch
-#define DEBUG_IR                 1
+#define DEBUG_PHYS               1
 
 // IR LED pin constant
 #if defined(__AVR_ATmega328P__)
@@ -115,7 +115,7 @@ ISR(TIMER2_OVF_vect);
 #endif
 
 // IntarIR class
-class IntarIR {
+class IntarPhys {
     
     // The ISR is our friend! It can call our private functions
 #if defined(__AVR_ATmega328P__)
@@ -125,8 +125,8 @@ class IntarIR {
 #endif
  
 public:
-    IntarIR();
-    ~IntarIR();
+    IntarPhys();
+    ~IntarPhys();
     bool begin(uint8_t recv_pin = 0);
     void enableTransmitter();
     void disableTransmitter();
@@ -181,6 +181,6 @@ private:
 };
 
 // We need to declare a singular, global instance of our IntarIR object
-extern IntarIR Intar_IR;
+extern IntarPhys Intar_Phys;
 
-#endif // IntarIR_H
+#endif // IntarPhys_H

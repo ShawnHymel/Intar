@@ -1,5 +1,5 @@
 /****************************************************************
-IntarIR_Receive.ino
+Receive.ino
 Intar Infrared Receive Test
 Shawn Hymel
 June 13, 2015
@@ -11,9 +11,10 @@ Serial monitor.
 Hardware Connections:
 
  Pin 11 -> IR Receiver (38 kHz)
+ Pin 13 -> LED (default on most Arduinos)
  
 Resources:
-Include IntarIR.h
+Include IntarPhys.h
 
 Development environment specifics:
 Written in Arduino 1.6.3
@@ -30,7 +31,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************/
 
-#include <IntarIR.h>
+#include <IntarPhys.h>
 
 // Pins
 const int receiver_pin = 11;
@@ -55,22 +56,22 @@ void setup() {
   digitalWrite(hit_pin, LOW);
 
   // Initialize Intar system
-  if ( Intar_IR.begin(receiver_pin) == false ) {
+  if ( Intar_Phys.begin(receiver_pin) == false ) {
     Serial.println(F("Could not start Intar IR."));
     while(1);
   }
   Serial.println(F("Receiver initialized. Don't tase me, bro!"));
   
   // Enable receiver
-  Intar_IR.enableReceiver();
+  Intar_Phys.enableReceiver();
 }
 
 void loop() {
   
   // Check if we have any packets and print them
-  if ( Intar_IR.available() ) {
+  if ( Intar_Phys.available() ) {
     memset(packet, 0, MAX_PACKET_SIZE);
-    num_bytes = Intar_IR.read(packet);
+    num_bytes = Intar_Phys.read(packet);
     if ( num_bytes == 0 ) {
         Serial.println("PACKET EMPTY");
     } else if ( num_bytes == RECV_ERROR ) {

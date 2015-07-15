@@ -1,21 +1,26 @@
 /****************************************************************
-IntarIR_Transmit.ino
+Transmit.ino
 Intar Infrared Transmit Test
 Shawn Hymel
 May 31, 2015
 
 Test the Intar's ability to send data over the IR link. Press
-the attached button to send shot packets. Note that pin 6 is
-hardcoded in the IntarIR library. This is because it is attached
-to a specific timer (FTM0).
+the attached button to send shot packets. Note that the IR LED
+is hardcoded in the IntarIR library. This is because it is 
+attached to a specific timer (e.g. FTM0).
 
-Hardware Connections:
+Hardware Connections (Teensy):
 
  Teensy LC Pin 6 -> IR LED
  Teensy LC Pin 2 -> Button
  
+Hardware Connections (328p):
+
+ Arduino Pin 3 -> IR LED
+ Arduino Pin 2 -> Button
+ 
 Resources:
-Include IntarIR.h
+Include IntarPhys.h
 
 Development environment specifics:
 Written in Arduino 1.6.3
@@ -32,7 +37,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************/
 
-#include <IntarIR.h>
+#include <IntarPhys.h>
 
 // Constants
 #define SEMI_AUTO       0
@@ -64,13 +69,13 @@ void setup() {
   Serial.begin(9600);
 
   // Initialize Intar system
-  if ( Intar_IR.begin() == false ) {
+  if ( Intar_Phys.begin() == false ) {
     Serial.println(F("Could not start Intar IR."));
     while(1);
   }
   
   // Enable transmitter
-  Intar_IR.enableTransmitter();
+  Intar_Phys.enableTransmitter();
   Serial.println(F("Transmitter initialized. Fire away!"));
 }
 
@@ -89,7 +94,7 @@ void loop() {
         if ( button_sample != button_state ) {
           button_state = button_sample;
           if ( button_state == LOW ) {
-            Intar_IR.xmit(shot_packet, shot_packet_size);
+            Intar_Phys.xmit(shot_packet, shot_packet_size);
             Serial.println("pew");
           }
         }
@@ -100,7 +105,7 @@ void loop() {
     // As long as the trigger is held, spray away!
     case FULL_AUTO:
       if ( digitalRead(trigger_pin) == LOW ) {
-        Intar_IR.xmit(shot_packet, shot_packet_size);
+        Intar_Phys.xmit(shot_packet, shot_packet_size);
         Serial.println("pew");
       }
       break;

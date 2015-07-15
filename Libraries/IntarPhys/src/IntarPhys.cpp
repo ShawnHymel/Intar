@@ -1,6 +1,6 @@
 /**
- * @file       IntarIR.cpp
- * @brief      Library for the Arduino-based laser tag system
+ * @file       IntarPhys.cpp
+ * @brief      Library for the IR physical layer in Arduino-based laser tag
  * @author     Shawn Hymel
  * @copyright  2015 Shawn Hymel
  * @license    http://opensource.org/licenses/MIT
@@ -26,15 +26,15 @@
 
 #include <Arduino.h>
  
-#include "IntarIR.h"
+#include "IntarPhys.h"
 
 // We need to create a global instance so that the ISR knows what to talk to
-IntarIR Intar_IR;
+IntarPhys Intar_Phys;
 
 /**
  * @brief Constructor
  */
-IntarIR::IntarIR()
+IntarPhys::IntarPhys()
 {
     
 }
@@ -42,19 +42,19 @@ IntarIR::IntarIR()
 /**
  * @brief Destructor
  */
-IntarIR::~IntarIR()
+IntarPhys::~IntarPhys()
 {
     
 }
 
 /**
- * @brief Configures the parameters for the IntarIR object. Call this first.
+ * @brief Configures the parameters for the IntarPhys object. Call this first.
  *
  * @param[in] tx_pin Transmit pin to use.
  * @param[in] rx_pin Receive pin to use.
  * @return True on initialization success. False on failure.
  */
-bool IntarIR::begin(uint8_t recv_pin /*= 0*/)
+bool IntarPhys::begin(uint8_t recv_pin /*= 0*/)
 {
     _recv_pin = recv_pin;
     
@@ -117,7 +117,7 @@ bool IntarIR::begin(uint8_t recv_pin /*= 0*/)
 /**
  * @brief Turn on the IR LED transmitter
  */
-void IntarIR::enableTransmitter()
+void IntarPhys::enableTransmitter()
 {
     // Set LED as output and turn off initially
     pinMode(IR_LED_PIN, OUTPUT);
@@ -140,7 +140,7 @@ void IntarIR::enableTransmitter()
 /**
  * @brief Turn off the transmitter
  */
-void IntarIR::disableTransmitter()
+void IntarPhys::disableTransmitter()
 {
     _xmit_enabled = false;
 }
@@ -150,7 +150,7 @@ void IntarIR::disableTransmitter()
 /**
  * @brief Turn on the receiver
  */
-void IntarIR::enableReceiver()
+void IntarPhys::enableReceiver()
 {   
     // Reset receiver parameters
     _recv_state = RECV_STATE_IDLE;
@@ -172,7 +172,7 @@ void IntarIR::enableReceiver()
 /**
  * @brief Turn off the receiver
  */
-void IntarIR::disableReceiver()
+void IntarPhys::disableReceiver()
 {
     _recv_enabled = false;
 }
@@ -183,7 +183,7 @@ void IntarIR::disableReceiver()
  * @param[in] data Data to send over IR
  * @param[in] len Length (in bytes) of data
  */
-void IntarIR::xmit(byte data[], uint8_t len)
+void IntarPhys::xmit(byte data[], uint8_t len)
 {
     // Wait for previous transmission to finish
     flushXmit();
@@ -208,7 +208,7 @@ void IntarIR::xmit(byte data[], uint8_t len)
  *
  * @return number of packets waiting to be read
  */
-uint8_t IntarIR::available()
+uint8_t IntarPhys::available()
 {
     return (_recv_head + RECV_MAX_PACKETS - _recv_tail) % RECV_MAX_PACKETS;
 }
@@ -218,7 +218,7 @@ uint8_t IntarIR::available()
  *
  * @return True for overflow. False for all normal.
  */
-boolean IntarIR::overflow()
+boolean IntarPhys::overflow()
 {
     return _recv_ring_overflow;
 }
@@ -229,7 +229,7 @@ boolean IntarIR::overflow()
  * @param[out] packet pointer to buffer to store the read packet
  * @return RECV_ERROR (-1) on error. Number of bytes in packet otherwise.
  */
-uint8_t IntarIR::read(uint8_t packet[MAX_PACKET_SIZE])
+uint8_t IntarPhys::read(uint8_t packet[MAX_PACKET_SIZE])
 {
     uint8_t num_bytes;
     
@@ -264,7 +264,7 @@ uint8_t IntarIR::read(uint8_t packet[MAX_PACKET_SIZE])
 /**
  * @brief Wait until the current IR transmission finished
  */
-void IntarIR::flushXmit()
+void IntarPhys::flushXmit()
 {
     while ( _xmit_state != XMIT_STATE_WAITING ) {
         delayMicroseconds(1);
@@ -274,7 +274,7 @@ void IntarIR::flushXmit()
 /**
  * @brief Transmit IR packets in a non-blocking manner
  */
-void IntarIR::doXmit()
+void IntarPhys::doXmit()
 {
     // State machine for transmitting a message
     switch ( _xmit_state ) {
@@ -388,7 +388,7 @@ void IntarIR::doXmit()
  *
  * @param on True to turn on LED, false to turn it off.
  */
-void IntarIR::pulse(boolean on)
+void IntarPhys::pulse(boolean on)
 {
     if ( on ) {
 #if defined(__AVR_ATmega328P__)
@@ -408,7 +408,7 @@ void IntarIR::pulse(boolean on)
 /**
  * @brief Writes a 1 or 0 to the receiver buffer
  */
-void IntarIR::storeBit(uint8_t recv_bit)
+void IntarPhys::storeBit(uint8_t recv_bit)
 {
     uint8_t current_byte;
     
@@ -440,7 +440,7 @@ void IntarIR::storeBit(uint8_t recv_bit)
 /**
  * @brief Stores number of bytes received and increments head
  */
-void IntarIR::storePacket()
+void IntarPhys::storePacket()
 {  
     // Store number of bytes received and increment ring buffer head
     if ( (_recv_head + 1) % RECV_MAX_PACKETS != _recv_tail ) {
@@ -454,7 +454,7 @@ void IntarIR::storePacket()
 /**
  * @brief Stores error in "number of bytes" array and increments head
  */
-void IntarIR::handleRecvError()
+void IntarPhys::handleRecvError()
 {
     // Store error and increment ring buffer head
     if ( (_recv_head + 1) % RECV_MAX_PACKETS != _recv_tail ) {
@@ -468,7 +468,7 @@ void IntarIR::handleRecvError()
 /**
  * @brief Receive IR packets asynchronously and store them in a buffer
  */
-void IntarIR::doRecv()
+void IntarPhys::doRecv()
 {
     uint8_t ir;
     
@@ -584,12 +584,12 @@ void IntarIR::doRecv()
 }
 
 /**
- * @brief ISR for IntarIR
+ * @brief ISR for IntarPhys
  *
  * Handle transmitting and receiving IR data. Each overflow is a "tick." Each
  * lowest division of the IR protocol is a "block." 
  */
-void IntarIR::isr()
+void IntarPhys::isr()
 {
     
     // Measure ticks. Every block, perform the transmit function.
@@ -610,13 +610,13 @@ void IntarIR::isr()
 /**
  * @brief Global interrupt service routine for timer
  *
- * We define ISR here to allow making calls to functions in the IntarIR class.
- * To do this, we instantiate a IntarIR object globally in the .cpp file.
+ * We define ISR here to allow making calls to functions in the IntarPhys class.
+ * To do this, we instantiate a IntarPhys object globally in the .cpp file.
  **/
 #if defined(__AVR_ATmega328P__)
 ISR(TIMER2_OVF_vect)
 {
-    Intar_IR.isr();
+    Intar_Phys.isr();
 }
 #elif defined(KINETISL)
 void ftm0_isr(void)
@@ -625,6 +625,6 @@ void ftm0_isr(void)
     FTM0_SC |= (1 << 7);
     
     // Execute Intar IR's ISR
-    Intar_IR.isr();
+    Intar_Phys.isr();
 }
 #endif
