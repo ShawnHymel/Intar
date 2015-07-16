@@ -1,5 +1,5 @@
 /****************************************************************
-Receive.ino
+PhysReceive.ino
 Intar Infrared Receive Test
 Shawn Hymel
 June 13, 2015
@@ -18,7 +18,7 @@ Include IntarPhys.h
 
 Development environment specifics:
 Written in Arduino 1.6.3
-Tested with a Teensy 
+Tested with a Teensy, Pro Mini 5V
 
 License: http://opensource.org/licenses/MIT
 

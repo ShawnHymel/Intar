@@ -30,7 +30,7 @@
 #include <Arduino.h>
 
 // Debug switch
-#define DEBUG_PHYS               1
+#define DEBUG_PHYS               0
 
 // IR LED pin constant
 #if defined(__AVR_ATmega328P__)
@@ -134,7 +134,7 @@ public:
     void disableReceiver();
     void xmit(byte data[], uint8_t len);
     uint8_t available();
-    boolean overflow();
+    bool overflow();
     uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);
 	
 private:
@@ -142,7 +142,7 @@ private:
     // IR transmission
     void flushXmit();
     void doXmit();
-    void pulse(boolean on);
+    void pulse(bool on);
     
     // IR receive
     void doRecv();
@@ -154,11 +154,11 @@ private:
     inline void isr();
 
     // Members for transmitter
-    volatile boolean _xmit_enabled;
+    volatile bool _xmit_enabled;
     volatile uint8_t _xmit_tick_counter;
     volatile int8_t _xmit_block_counter;
     volatile uint8_t _xmit_state;
-    volatile boolean _bit_pulse;
+    volatile bool _bit_pulse;
     volatile uint8_t _xmit_bit;
     volatile uint8_t _xmit_byte;
     volatile uint8_t _bytes_to_send;
@@ -167,7 +167,7 @@ private:
     
     // Members for receiver
     uint8_t _recv_pin;
-    volatile boolean _recv_enabled;
+    volatile bool _recv_enabled;
     volatile uint16_t _recv_tick_counter;
 	volatile uint16_t _recv_sample_counter;
     volatile uint8_t _recv_state;
@@ -177,7 +177,7 @@ private:
 	uint8_t _recv_buffer[MAX_PACKET_SIZE * RECV_MAX_PACKETS];
     volatile uint8_t _recv_head;
     volatile uint8_t _recv_tail;
-    volatile boolean _recv_ring_overflow;
+    volatile bool _recv_ring_overflow;
 };
 
 // We need to declare a singular, global instance of our IntarIR object

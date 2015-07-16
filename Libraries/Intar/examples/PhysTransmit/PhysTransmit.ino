@@ -1,5 +1,5 @@
 /****************************************************************
-Transmit.ino
+PhysTransmit.ino
 Intar Infrared Transmit Test
 Shawn Hymel
 May 31, 2015

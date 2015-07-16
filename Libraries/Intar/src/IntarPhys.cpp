@@ -50,7 +50,6 @@ IntarPhys::~IntarPhys()
 /**
  * @brief Configures the parameters for the IntarPhys object. Call this first.
  *
- * @param[in] tx_pin Transmit pin to use.
  * @param[in] rx_pin Receive pin to use.
  * @return True on initialization success. False on failure.
  */
@@ -144,8 +143,6 @@ void IntarPhys::disableTransmitter()
 {
     _xmit_enabled = false;
 }
-  
-
 
 /**
  * @brief Turn on the receiver
@@ -218,7 +215,7 @@ uint8_t IntarPhys::available()
  *
  * @return True for overflow. False for all normal.
  */
-boolean IntarPhys::overflow()
+bool IntarPhys::overflow()
 {
     return _recv_ring_overflow;
 }
@@ -388,7 +385,7 @@ void IntarPhys::doXmit()
  *
  * @param on True to turn on LED, false to turn it off.
  */
-void IntarPhys::pulse(boolean on)
+void IntarPhys::pulse(bool on)
 {
     if ( on ) {
 #if defined(__AVR_ATmega328P__)
