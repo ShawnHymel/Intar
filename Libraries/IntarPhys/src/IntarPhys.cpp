@@ -60,18 +60,18 @@ bool IntarPhys::begin(uint8_t recv_pin /*= 0*/)
     
     // Set up the hardware PWM for the IR LED
 #if defined(__AVR_ATmega328P__)
-
+    
     // Use Timer 2 in Fast PWM mode, clear on match
     TCCR2A = _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
     
-    // Reset timer on TOP (OCR2A), prescaler = 1
-    TCCR2B = _BV(WGM22) | _BV(CS20);
+    // Reset timer on TOP (OCR2A), prescaler = 8
+    TCCR2B = _BV(WGM22) | _BV(CS21);
     
     // TOP (OCR2A) is modulation frequency. Timer 2 resets on this number.
-    OCR2A = MOD_COUNTER_VAL;
+    OCR2A = MOD_COUNTER_VAL >> 3;   // Account for prescaler of 8
     
     // Set the PWM value to 50%
-    OCR2B = MOD_COUNTER_VAL >> 1;   // #define won't divide nicely
+    OCR2B = MOD_COUNTER_VAL >> 4;   // #define won't divide nicely
     
     // Enable Timer 2 overflow interrupt
     TIMSK2 = _BV(TOIE2);
