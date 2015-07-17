@@ -5,7 +5,7 @@ Shawn Hymel
 July 15, 2015
 
 Demo sketch that sends and receives packets. Play a mini-tag
-game. 5 HP, semi-auto, 1 damage shots. Health recharges after
+game. 25 HP, semi-auto, 5 damage shots. Health recharges after
 5 seconds. Death at 0 HP, firing disabled. Respawn in 10
 seconds.
  
