@@ -180,7 +180,7 @@ void IntarPhys::disableReceiver()
  * @param[in] data Data to send over IR
  * @param[in] len Length (in bytes) of data
  */
-void IntarPhys::xmit(byte data[], uint8_t len)
+void IntarPhys::xmit(uint8_t data[], uint8_t len)
 {
     // Wait for previous transmission to finish
     flushXmit();

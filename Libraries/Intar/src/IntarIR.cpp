@@ -88,6 +88,34 @@ void IntarIR::disableReceiver()
 }
 
 /**
+ * @brief Transmit a packet over IR. Append checksum to end.
+ *
+ * @param[in] data Data to send over IR
+ * @param[in] len Length (in bytes) of data
+ */
+void IntarIR::send(uint8_t data[], uint8_t len)
+{
+    uint8_t *buf;
+    uint8_t cs;
+    
+    // Create a buffer one larger than the input data
+    buf = (uint8_t *)malloc((len + 1) * sizeof(uint8_t));
+    
+    // Copy over message data
+    memcpy(buf, data, len);
+    
+    // Compute and store checksum
+    cs = checksum(data, len);
+    buf[len] = cs;
+    
+    // Send message
+    Intar_Phys.xmit(buf, len + 1);
+    
+    // Free buffer
+    free(buf);
+}
+
+/**
  * @brief Determines if there is data in the receive buffer ready to be read
  *
  * @return number of packets waiting to be read
@@ -105,5 +133,46 @@ uint8_t IntarIR::available()
  */
 uint8_t IntarIR::read(uint8_t packet[MAX_PACKET_SIZE])
 {
-    return Intar_Phys.read(packet);
+    uint8_t buf[MAX_PACKET_SIZE];
+    uint8_t num_bytes;
+    uint8_t cs;
+    
+    // Read from receiver
+    num_bytes = Intar_Phys.read(buf);
+    
+    // If we received an error or empty packet, return immediately
+    if ( num_bytes == 0 ) {
+        return 0;
+    } else if ( num_bytes == RECV_ERROR ) {
+        return RECV_ERROR;
+    }
+    
+    // Perform checksum
+    cs = checksum(buf, num_bytes);
+    
+    // Checksum should be 0 on a good packet
+    if ( cs == 0 ) {
+        memcpy(packet, buf, num_bytes - 1);
+        return num_bytes - 1;
+    } else {
+        return RECV_ERROR;
+    }
+}
+
+/**
+ * @brief Compute a simple XOR checksum
+ *
+ * @param[in] data buffer to perform the checksum on
+ * @param[in] len length of the data buffer
+ * @return the checksum (1 byte)
+ */
+uint8_t IntarIR::checksum(uint8_t data[], uint8_t len)
+{
+    uint8_t cs = 0;
+    
+    for ( int i = 0; i < len; i++ ) {
+        cs ^= data[i];
+    }
+    
+    return cs;
 }

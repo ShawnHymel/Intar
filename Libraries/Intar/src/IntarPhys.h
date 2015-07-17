@@ -132,7 +132,7 @@ public:
     void disableTransmitter();
     void enableReceiver();
     void disableReceiver();
-    void xmit(byte data[], uint8_t len);
+    void xmit(uint8_t data[], uint8_t len);
     uint8_t available();
     bool overflow();
     uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);

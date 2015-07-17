@@ -44,11 +44,13 @@ public:
     void disableTransmitter();
     void enableReceiver();
     void disableReceiver();
+    void send(uint8_t data[], uint8_t len);
     uint8_t available();
     uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);
     
 private:
 
+    uint8_t checksum(uint8_t data[], uint8_t len);
 };
 
 #endif // IntarIR_H
