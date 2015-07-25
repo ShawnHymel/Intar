@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -5581,12 +5581,12 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <part name="J1" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="R1" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603-RES" value="30?"/>
+<part name="R1" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603-RES" value="33"/>
 <part name="D1" library="Intar_Eagle_Library" deviceset="LED" device="IR42-21C/TR8" value="IR">
 <attribute name="MFG_NAME" value="IR42-21C/TR8"/>
 </part>
 <part name="Q1" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="MMBT2222A" value="MMBT2222A"/>
-<part name="C1" library="SparkFun-Capacitors" deviceset="10NF/10000PF-50V-10%(0603)" device="" value="10nF"/>
+<part name="C1" library="SparkFun-Capacitors" deviceset="10NF/10000PF-50V-10%(0603)" device="" value="DNP"/>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
@@ -5622,8 +5622,8 @@ LEDs</text>
 <text x="227.33" y="120.142" size="1.778" layer="97" align="bottom-center">Vf</text>
 <text x="236.22" y="120.142" size="1.778" layer="97" align="bottom-center">R4 &amp; R5</text>
 <wire x1="213.36" y1="119.38" x2="241.3" y2="119.38" width="0.1524" layer="97"/>
-<wire x1="223.52" y1="121.92" x2="223.52" y2="104.14" width="0.1524" layer="97"/>
-<wire x1="231.14" y1="121.92" x2="231.14" y2="104.14" width="0.1524" layer="97"/>
+<wire x1="223.52" y1="121.92" x2="223.52" y2="106.68" width="0.1524" layer="97"/>
+<wire x1="231.14" y1="121.92" x2="231.14" y2="106.68" width="0.1524" layer="97"/>
 <text x="218.44" y="116.84" size="1.778" layer="97" align="bottom-center">Red</text>
 <text x="227.33" y="116.84" size="1.778" layer="97" align="bottom-center">2V</text>
 <text x="236.22" y="116.84" size="1.778" layer="97" align="bottom-center">56</text>
@@ -5637,6 +5637,15 @@ LEDs</text>
 <text x="65.024" y="149.86" size="1.778" layer="97" align="center-right">V</text>
 <text x="65.024" y="147.32" size="1.778" layer="97" align="center-right">IR</text>
 <text x="65.024" y="144.78" size="1.778" layer="97" align="center-right">L</text>
+<text x="218.44" y="114.3" size="1.778" layer="97" align="bottom-center">Yellow</text>
+<text x="227.33" y="114.3" size="1.778" layer="97" align="bottom-center">2V</text>
+<text x="236.22" y="114.3" size="1.778" layer="97" align="bottom-center">56</text>
+<text x="218.44" y="111.76" size="1.778" layer="97" align="bottom-center">Green</text>
+<text x="227.33" y="111.76" size="1.778" layer="97" align="bottom-center">2.1V</text>
+<text x="236.22" y="111.76" size="1.778" layer="97" align="bottom-center">51</text>
+<text x="218.44" y="109.22" size="1.778" layer="97" align="bottom-center">Blue</text>
+<text x="227.33" y="109.22" size="1.778" layer="97" align="bottom-center">2.95V</text>
+<text x="236.22" y="109.22" size="1.778" layer="97" align="bottom-center">6.2</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
