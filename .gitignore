@@ -33,10 +33,10 @@ local.properties
 ## Eagle
 #############
 
-# Ignore the board and schematic backup files
+# Ignore the board, schematic, and library backup files
 *.b#?
 *.s#?
-
+*.l#?
 
 #################
 ## Visual Studio
