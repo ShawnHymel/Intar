@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="yes" active="yes"/>
@@ -90,6 +90,7 @@
 <layer number="111" name="LPC17xx" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="112" name="tSilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="113" name="IDFDebug" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="114" name="Badge_Outline" color="11" fill="1" visible="no" active="no"/>
 <layer number="116" name="Patch_BOT" color="9" fill="4" visible="yes" active="yes"/>
 <layer number="118" name="Rect_Pads" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="121" name="_tsilk" color="7" fill="1" visible="yes" active="yes"/>
@@ -347,6 +348,24 @@
 <circle x="2.08209375" y="-1.48384375" radius="0.1" width="0.2032" layer="21"/>
 </package>
 <package name="VIBE_COIN_SMD">
+<wire x1="0.635" y1="-5.07" x2="0.635" y2="-5.578" width="0.127" layer="51"/>
+<wire x1="0.635" y1="-5.578" x2="3.81" y2="-5.578" width="0.127" layer="51"/>
+<wire x1="3.81" y1="-5.578" x2="3.81" y2="-8.88" width="0.127" layer="51"/>
+<wire x1="3.81" y1="-8.88" x2="-3.81" y2="-8.88" width="0.127" layer="51"/>
+<wire x1="-3.81" y1="-8.88" x2="-3.81" y2="-5.578" width="0.127" layer="51"/>
+<wire x1="-3.81" y1="-5.578" x2="-0.635" y2="-5.578" width="0.127" layer="51"/>
+<wire x1="-0.635" y1="-5.578" x2="-0.635" y2="-5.07" width="0.127" layer="51"/>
+<wire x1="0.254" y1="-5.07" x2="0.254" y2="-8.499" width="0.127" layer="51"/>
+<wire x1="-0.254" y1="-5.07" x2="-0.254" y2="-8.499" width="0.127" layer="51"/>
+<circle x="0" y="0.01" radius="5.0009" width="0.127" layer="51"/>
+<smd name="1" x="4.191" y="-7.229" dx="3.175" dy="1.905" layer="1" roundness="75" rot="R90"/>
+<smd name="2" x="-4.191" y="-7.229" dx="3.175" dy="1.905" layer="1" roundness="75" rot="R90"/>
+<rectangle x1="-3.556" y1="-8.499" x2="-0.254" y2="-5.832" layer="51"/>
+<rectangle x1="0.254" y1="-8.499" x2="3.556" y2="-5.832" layer="51"/>
+<circle x="0" y="0" radius="5.0009" width="0.2032" layer="21"/>
+<wire x1="-1.25" y1="-6.8" x2="1.25" y2="-6.8" width="0.2032" layer="21"/>
+<wire x1="-1.25" y1="-6.8" x2="-1.25" y2="-4.9" width="0.2032" layer="21"/>
+<wire x1="1.25" y1="-6.8" x2="1.25" y2="-4.9" width="0.2032" layer="21"/>
 </package>
 <package name="LOGO_SM">
 <polygon width="0" layer="21">
@@ -10557,6 +10576,22 @@
 </gates>
 <devices>
 <device name="SM" package="LOGO_SM">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MOTOR" prefix="M">
+<gates>
+<gate name="G$1" symbol="MOTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="VIBE_COIN_SMD" package="VIBE_COIN_SMD">
+<connects>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
 <technologies>
 <technology name=""/>
 </technologies>
