@@ -4240,88 +4240,8 @@ Various fiducial points for machine vision alignment.</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="SparkFun-Electromechanical">
-<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
-In this library you'll find anything that moves- switches, relays, buttons, potentiometers. Also, anything that goes on a board but isn't electrical in nature- screws, standoffs, etc.&lt;br&gt;&lt;br&gt;
-We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
-&lt;br&gt;&lt;br&gt;
-&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
-&lt;br&gt;&lt;br&gt;
-You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
-<packages>
-<package name="STAND-OFF">
-<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
-This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
-<wire x1="0" y1="1.8542" x2="0" y2="-1.8542" width="0.2032" layer="41" curve="-180"/>
-<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="41" curve="-180"/>
-<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="180"/>
-<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="-180"/>
-<circle x="0" y="0" radius="2.794" width="0.127" layer="39"/>
-<hole x="0" y="0" drill="3.302"/>
-</package>
-<package name="STAND-OFF-TIGHT">
-<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
-This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
-<wire x1="0" y1="1.8542" x2="0" y2="-1.8542" width="0.2032" layer="41" curve="-180"/>
-<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="41" curve="-180"/>
-<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="180"/>
-<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="-180"/>
-<circle x="0" y="0" radius="2.794" width="0.127" layer="39"/>
-<hole x="0" y="0" drill="3.048"/>
-</package>
-</packages>
-<symbols>
-<symbol name="STAND-OFF">
-<circle x="0" y="0" radius="1.27" width="0.254" layer="94"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="STAND-OFF" prefix="STANDOFF">
-<description>&lt;b&gt;#4 Stand Off&lt;/b&gt;&lt;p&gt;
-This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
-<gates>
-<gate name="G$1" symbol="STAND-OFF" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="STAND-OFF">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="TIGHT" package="STAND-OFF-TIGHT">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="Intar_Eagle_Library">
 <packages>
-<package name="KSCXXXG">
-<wire x1="-3.1" y1="-1.2" x2="-3.1" y2="1.2" width="0.2032" layer="21"/>
-<wire x1="-3.1" y1="3.1" x2="3.1" y2="3.1" width="0.2032" layer="21"/>
-<wire x1="3.1" y1="-1.2" x2="3.1" y2="1.2" width="0.2032" layer="21"/>
-<wire x1="-3.1" y1="-3.1" x2="3.1" y2="-3.1" width="0.2032" layer="21"/>
-<wire x1="2" y1="1.2" x2="2" y2="0.4" width="0.127" layer="51"/>
-<wire x1="2" y1="-0.2" x2="2" y2="-1.2" width="0.127" layer="51"/>
-<circle x="0" y="0" radius="1.5" width="0.2032" layer="21"/>
-<smd name="1" x="-2.9" y="2" dx="1" dy="3.1" layer="1" rot="R90"/>
-<smd name="2" x="2.9" y="2" dx="1" dy="3.1" layer="1" rot="R90"/>
-<smd name="3" x="-2.794" y="-2" dx="1" dy="3.1" layer="1" rot="R90"/>
-<smd name="4" x="2.9" y="-2" dx="1" dy="3.1" layer="1" rot="R90"/>
-<text x="-0.889" y="1.778" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-0.889" y="-2.032" size="0.4064" layer="27">&gt;Value</text>
-<wire x1="-3.1" y1="3.1" x2="-3.1" y2="2.8" width="0.2032" layer="21"/>
-<wire x1="3.1" y1="3.1" x2="3.1" y2="2.8" width="0.2032" layer="21"/>
-<wire x1="3.1" y1="-2.8" x2="3.1" y2="-3.1" width="0.2032" layer="21"/>
-<wire x1="-3.1" y1="-2.8" x2="-3.1" y2="-3.1" width="0.2032" layer="21"/>
-<wire x1="2" y1="0.4" x2="2.4" y2="0" width="0.127" layer="51"/>
-<wire x1="-2.4" y1="1.2" x2="-2.4" y2="0.4" width="0.127" layer="51"/>
-<wire x1="-2.4" y1="-0.2" x2="-2.4" y2="-1.2" width="0.127" layer="51"/>
-<wire x1="-2.4" y1="0.4" x2="-2" y2="0" width="0.127" layer="51"/>
-</package>
 <package name="LOGO_SM">
 <polygon width="0" layer="21">
 <vertex x="0.77145" y="1.57528125"/>
@@ -12590,29 +12510,27 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <vertex x="-0.752703125" y="-1.579475"/>
 </polygon>
 </package>
+<package name="TSOP754XXW">
+<text x="-3.4" y="1.4" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-3.4" y="-2.8" size="0.4064" layer="27">&gt;VALUE</text>
+<smd name="1" x="-1.905" y="-1.3" dx="0.8" dy="1.8" layer="1"/>
+<wire x1="-3.4" y1="-1.8" x2="-3.4" y2="1.2" width="0.2032" layer="21"/>
+<wire x1="3.4" y1="-1.8" x2="3.4" y2="1.2" width="0.2032" layer="21"/>
+<wire x1="-3.4" y1="-1.8" x2="3.4" y2="-1.8" width="0.127" layer="51"/>
+<smd name="2" x="-0.635" y="-1.3" dx="0.8" dy="1.8" layer="1"/>
+<smd name="3" x="0.635" y="-1.3" dx="0.8" dy="1.8" layer="1"/>
+<smd name="4" x="1.905" y="-1.3" dx="0.8" dy="1.8" layer="1"/>
+<circle x="-1.625" y="0" radius="0.5" width="0.127" layer="51"/>
+<circle x="1.625" y="0" radius="0.5" width="0.127" layer="51"/>
+<wire x1="-3.4" y1="-1.8" x2="-3.4" y2="1.2" width="0.127" layer="51"/>
+<wire x1="3.4" y1="-1.8" x2="3.4" y2="1.2" width="0.127" layer="51"/>
+<wire x1="-3.4" y1="1.2" x2="3.4" y2="1.2" width="0.127" layer="51"/>
+<wire x1="-3.4" y1="1.2" x2="3.4" y2="1.2" width="0.2032" layer="21"/>
+<wire x1="-3.4" y1="-1.8" x2="-2.8" y2="-1.8" width="0.2032" layer="21"/>
+<wire x1="2.8" y1="-1.8" x2="3.4" y2="-1.8" width="0.2032" layer="21"/>
+</package>
 </packages>
 <symbols>
-<symbol name="SWITCH_MOMENTARY">
-<wire x1="1.905" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
-<wire x1="1.905" y1="4.445" x2="1.905" y2="3.175" width="0.254" layer="94"/>
-<wire x1="-1.905" y1="4.445" x2="-1.905" y2="3.175" width="0.254" layer="94"/>
-<wire x1="1.905" y1="4.445" x2="0" y2="4.445" width="0.254" layer="94"/>
-<wire x1="0" y1="4.445" x2="-1.905" y2="4.445" width="0.254" layer="94"/>
-<wire x1="0" y1="2.54" x2="0" y2="1.905" width="0.1524" layer="94"/>
-<wire x1="0" y1="1.27" x2="0" y2="0.635" width="0.1524" layer="94"/>
-<wire x1="0" y1="4.445" x2="0" y2="3.175" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-2.54" x2="2.54" y2="0" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-2.54" x2="-2.54" y2="0" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="0" x2="1.905" y2="1.27" width="0.254" layer="94"/>
-<circle x="-2.54" y="0" radius="0.127" width="0.4064" layer="94"/>
-<circle x="2.54" y="0" radius="0.127" width="0.4064" layer="94"/>
-<text x="-2.54" y="6.35" size="1.778" layer="95">&gt;NAME</text>
-<text x="-2.54" y="-6.35" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="1" x="-5.08" y="0" visible="pad" length="short" direction="pas" swaplevel="2"/>
-<pin name="3" x="5.08" y="0" visible="pad" length="short" direction="pas" swaplevel="1" rot="R180"/>
-<pin name="4" x="5.08" y="-2.54" visible="pad" length="short" direction="pas" swaplevel="1" rot="R180"/>
-<pin name="2" x="-5.08" y="-2.54" visible="pad" length="short" direction="pas" swaplevel="2"/>
-</symbol>
 <symbol name="LOGO">
 <rectangle x1="5.5499" y1="-0.0127" x2="5.6769" y2="0.0127" layer="94"/>
 <rectangle x1="6.9977" y1="-0.0127" x2="7.1501" y2="0.0127" layer="94"/>
@@ -14189,19 +14107,62 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <rectangle x1="5.4991" y1="11.9253" x2="5.6769" y2="11.9507" layer="94"/>
 <rectangle x1="6.9977" y1="11.9253" x2="7.1247" y2="11.9507" layer="94"/>
 </symbol>
+<symbol name="IR_RECEIVER">
+<wire x1="-7.62" y1="7.62" x2="7.62" y2="7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="7.62" x2="7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-5.08" x2="-7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-5.08" x2="-7.62" y2="7.62" width="0.254" layer="94"/>
+<text x="-7.62" y="8.382" size="1.778" layer="95">&gt;NAME</text>
+<text x="-7.62" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="GND1" x="10.16" y="5.08" length="short" rot="R180"/>
+<pin name="VS" x="10.16" y="2.54" length="short" rot="R180"/>
+<pin name="OUT" x="10.16" y="0" length="short" rot="R180"/>
+<pin name="GND4" x="10.16" y="-2.54" length="short" rot="R180"/>
+<wire x1="-5.588" y1="0" x2="-4.318" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-4.318" y1="1.27" x2="-3.048" y2="0" width="0.254" layer="94"/>
+<wire x1="-5.588" y1="0" x2="-4.318" y2="0" width="0.254" layer="94"/>
+<wire x1="-4.318" y1="0" x2="-3.048" y2="0" width="0.254" layer="94"/>
+<wire x1="-5.588" y1="1.27" x2="-4.318" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-4.318" y1="1.27" x2="-3.048" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-4.318" y1="2.54" x2="-4.318" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-4.318" y1="0" x2="-4.318" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-6.858" y1="2.54" x2="-6.096" y2="1.778" width="0.254" layer="94"/>
+<wire x1="-6.096" y1="1.778" x2="-6.096" y2="2.286" width="0.254" layer="94"/>
+<wire x1="-6.096" y1="1.778" x2="-6.604" y2="1.778" width="0.254" layer="94"/>
+<wire x1="-6.858" y1="1.27" x2="-6.096" y2="0.508" width="0.254" layer="94"/>
+<wire x1="-6.096" y1="0.508" x2="-6.096" y2="1.016" width="0.254" layer="94"/>
+<wire x1="-6.096" y1="0.508" x2="-6.604" y2="0.508" width="0.254" layer="94"/>
+<wire x1="-4.318" y1="2.54" x2="-1.778" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-1.778" y1="2.54" x2="-1.778" y2="6.35" width="0.254" layer="94" style="shortdash"/>
+<wire x1="-1.778" y1="6.35" x2="-1.27" y2="6.35" width="0.254" layer="94"/>
+<wire x1="-1.778" y1="2.54" x2="-1.778" y2="-3.81" width="0.254" layer="94" style="shortdash"/>
+<wire x1="-1.778" y1="-3.81" x2="-1.27" y2="-3.81" width="0.254" layer="94"/>
+</symbol>
 </symbols>
 <devicesets>
-<deviceset name="SWITCH_MOMENTARY" prefix="SW">
+<deviceset name="LOGO">
 <gates>
-<gate name="G$1" symbol="SWITCH_MOMENTARY" x="0" y="0"/>
+<gate name="G$1" symbol="LOGO" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="KSCXXXG">
+<device name="SM" package="LOGO_SM">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="IR_RECEIVER" prefix="U">
+<gates>
+<gate name="G$1" symbol="IR_RECEIVER" x="0" y="-2.54"/>
+</gates>
+<devices>
+<device name="" package="TSOP754XXW">
 <connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-<connect gate="G$1" pin="3" pad="3"/>
-<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="GND1" pad="1"/>
+<connect gate="G$1" pin="GND4" pad="4"/>
+<connect gate="G$1" pin="OUT" pad="3"/>
+<connect gate="G$1" pin="VS" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -14209,12 +14170,57 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 </device>
 </devices>
 </deviceset>
-<deviceset name="LOGO">
+</devicesets>
+</library>
+<library name="SparkFun-Electromechanical">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find anything that moves- switches, relays, buttons, potentiometers. Also, anything that goes on a board but isn't electrical in nature- screws, standoffs, etc.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
+&lt;br&gt;&lt;br&gt;
+You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="STAND-OFF">
+<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
+This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
+<wire x1="0" y1="1.8542" x2="0" y2="-1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="-180"/>
+<circle x="0" y="0" radius="2.794" width="0.127" layer="39"/>
+<hole x="0" y="0" drill="3.302"/>
+</package>
+<package name="STAND-OFF-TIGHT">
+<description>&lt;b&gt;Stand Off&lt;/b&gt;&lt;p&gt;
+This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
+<wire x1="0" y1="1.8542" x2="0" y2="-1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="41" curve="-180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="180"/>
+<wire x1="0" y1="-1.8542" x2="0" y2="1.8542" width="0.2032" layer="42" curve="-180"/>
+<circle x="0" y="0" radius="2.794" width="0.127" layer="39"/>
+<hole x="0" y="0" drill="3.048"/>
+</package>
+</packages>
+<symbols>
+<symbol name="STAND-OFF">
+<circle x="0" y="0" radius="1.27" width="0.254" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="STAND-OFF" prefix="STANDOFF">
+<description>&lt;b&gt;#4 Stand Off&lt;/b&gt;&lt;p&gt;
+This is the mechanical footprint for a #4 phillips button head screw. Use the keepout ring to avoid running the screw head into surrounding components. SKU : PRT-00447</description>
 <gates>
-<gate name="G$1" symbol="LOGO" x="0" y="0"/>
+<gate name="G$1" symbol="STAND-OFF" x="0" y="0"/>
 </gates>
 <devices>
-<device name="SM" package="LOGO_SM">
+<device name="" package="STAND-OFF">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="TIGHT" package="STAND-OFF-TIGHT">
 <technologies>
 <technology name=""/>
 </technologies>
@@ -14267,26 +14273,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="10KOHM-1/10W-1%(0603)" prefix="R" uservalue="yes">
-<description>RES-00824</description>
-<gates>
-<gate name="G$1" symbol="RESISTOR" x="0" y="0"/>
-</gates>
-<devices>
-<device name="0603" package="0603-RES">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-00824"/>
-<attribute name="VALUE" value="10K" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="100OHM-1/10W-1%(0603)" prefix="R" uservalue="yes">
 <description>RES-07863</description>
 <gates>
@@ -14307,6 +14293,107 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </device>
 </devices>
 </deviceset>
+<deviceset name="2.2KOHM-1/10W-1%(0603)" prefix="R" uservalue="yes">
+<description>RES-08272</description>
+<gates>
+<gate name="G$1" symbol="RESISTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="0603-RES">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-08272"/>
+<attribute name="VALUE" value="2.2k" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="SparkFun-Capacitors">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find resistors, capacitors, inductors, test points, jumper pads, etc.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
+&lt;br&gt;&lt;br&gt;
+You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="0603-CAP">
+<wire x1="-1.473" y1="0.983" x2="1.473" y2="0.983" width="0.0508" layer="39"/>
+<wire x1="1.473" y1="0.983" x2="1.473" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="1.473" y1="-0.983" x2="-1.473" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="-1.473" y1="-0.983" x2="-1.473" y2="0.983" width="0.0508" layer="39"/>
+<wire x1="-0.356" y1="0.432" x2="0.356" y2="0.432" width="0.1016" layer="51"/>
+<wire x1="-0.356" y1="-0.419" x2="0.356" y2="-0.419" width="0.1016" layer="51"/>
+<wire x1="0" y1="0.0305" x2="0" y2="-0.0305" width="0.5588" layer="21"/>
+<smd name="1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<smd name="2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<text x="-0.889" y="0.762" size="0.4064" layer="25" font="vector">&gt;NAME</text>
+<text x="-1.016" y="-1.143" size="0.4064" layer="27" font="vector">&gt;VALUE</text>
+<rectangle x1="-0.8382" y1="-0.4699" x2="-0.3381" y2="0.4801" layer="51"/>
+<rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
+<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
+</package>
+</packages>
+<symbols>
+<symbol name="CAP">
+<wire x1="0" y1="2.54" x2="0" y2="2.032" width="0.1524" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="0.508" width="0.1524" layer="94"/>
+<text x="1.524" y="2.921" size="1.778" layer="95">&gt;NAME</text>
+<text x="1.524" y="-2.159" size="1.778" layer="96">&gt;VALUE</text>
+<rectangle x1="-2.032" y1="0.508" x2="2.032" y2="1.016" layer="94"/>
+<rectangle x1="-2.032" y1="1.524" x2="2.032" y2="2.032" layer="94"/>
+<pin name="1" x="0" y="5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
+<pin name="2" x="0" y="-2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="1.0UF-16V-10%(0603)" prefix="C" uservalue="yes">
+<description>CAP-00868</description>
+<gates>
+<gate name="G$1" symbol="CAP" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="0603-CAP">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="CAP-00868"/>
+<attribute name="VALUE" value="1.0uF" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="47NF(0.047UF/47000PF)-25V-5%(0603)" prefix="C" uservalue="yes">
+<description>CAP-08605</description>
+<gates>
+<gate name="G$1" symbol="CAP" x="0" y="-2.54"/>
+</gates>
+<devices>
+<device name="SMD" package="0603-CAP">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="CAP-08605" constant="no"/>
+<attribute name="VALUE" value="47nF" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </libraries>
@@ -14320,121 +14407,153 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </classes>
 <parts>
 <part name="FRAME1" library="SparkFun-Aesthetics" deviceset="FRAME-LETTER" device=""/>
-<part name="J1" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
-<part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="FID1" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
 <part name="FID2" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
 <part name="STANDOFF1" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF2" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="OSHW-LOGO" device="S"/>
-<part name="SW1" library="Intar_Eagle_Library" deviceset="SWITCH_MOMENTARY" device=""/>
-<part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="R1" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
-<part name="R2" library="SparkFun-Resistors" deviceset="100OHM-1/10W-1%(0603)" device="" value="100"/>
-<part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="J2" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
+<part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="U$1" library="Intar_Eagle_Library" deviceset="LOGO" device="SM"/>
+<part name="U1" library="Intar_Eagle_Library" deviceset="IR_RECEIVER" device=""/>
+<part name="R1" library="SparkFun-Resistors" deviceset="100OHM-1/10W-1%(0603)" device="" value="100"/>
+<part name="R2" library="SparkFun-Resistors" deviceset="2.2KOHM-1/10W-1%(0603)" device="" value="2.2k"/>
+<part name="C1" library="SparkFun-Capacitors" deviceset="1.0UF-16V-10%(0603)" device="" value="1.0uF"/>
+<part name="C2" library="SparkFun-Capacitors" deviceset="47NF(0.047UF/47000PF)-25V-5%(0603)" device="SMD" value="47nF"/>
+<part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 <text x="155.956" y="6.35" size="2.54" layer="94">Shawn Hymel</text>
 <text x="238.76" y="7.62" size="2.54" layer="94">v01</text>
-<text x="60.96" y="135.89" size="1.778" layer="97">Grove</text>
-<text x="59.944" y="147.32" size="1.778" layer="97" align="center-right">G</text>
-<text x="59.944" y="144.78" size="1.778" layer="97" align="center-right">V</text>
-<text x="59.944" y="139.7" size="1.778" layer="97" align="center-right">B</text>
-<text x="76.2" y="53.34" size="1.778" layer="97">KSC441G</text>
+<text x="68.58" y="138.43" size="1.778" layer="97">Grove</text>
+<text x="2.54" y="109.22" size="2.54" layer="97">Grove Connector</text>
+<text x="2.54" y="2.54" size="2.54" layer="97">IR Receiver</text>
+<text x="67.564" y="149.86" size="1.778" layer="97" align="center-right">G</text>
+<text x="67.564" y="147.32" size="1.778" layer="97" align="center-right">V</text>
+<text x="67.564" y="142.24" size="1.778" layer="97" align="center-right">OUT</text>
 <wire x1="147.32" y1="35.56" x2="147.32" y2="106.68" width="0.254" layer="97" style="shortdash"/>
 <wire x1="147.32" y1="106.68" x2="147.32" y2="185.42" width="0.254" layer="97" style="shortdash"/>
 <wire x1="147.32" y1="106.68" x2="0" y2="106.68" width="0.254" layer="97" style="shortdash"/>
-<text x="2.54" y="109.22" size="2.54" layer="97">Grove Connector</text>
-<text x="2.54" y="2.54" size="2.54" layer="97">IR LED</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
 <instance part="FRAME1" gate="V" x="147.32" y="0"/>
-<instance part="J1" gate="J" x="63.5" y="143.51" smashed="yes" rot="MR180">
-<attribute name="NAME" x="62.738" y="149.352" size="1.27" layer="95" ratio="10" rot="MR0"/>
-</instance>
-<instance part="GND1" gate="1" x="76.2" y="149.86"/>
-<instance part="SUPPLY1" gate="G$1" x="83.82" y="147.32"/>
 <instance part="FID1" gate="G$1" x="246.38" y="33.02"/>
 <instance part="FID2" gate="G$1" x="246.38" y="27.94"/>
 <instance part="STANDOFF1" gate="G$1" x="241.3" y="33.02"/>
 <instance part="STANDOFF2" gate="G$1" x="241.3" y="27.94"/>
 <instance part="LOGO1" gate="G$1" x="132.08" y="10.16"/>
-<instance part="SW1" gate="G$1" x="81.28" y="58.42" smashed="yes">
-<attribute name="NAME" x="78.74" y="64.77" size="1.778" layer="95"/>
+<instance part="J2" gate="J" x="71.12" y="146.05" smashed="yes">
+<attribute name="NAME" x="68.58" y="151.892" size="1.27" layer="95" ratio="10"/>
 </instance>
-<instance part="SUPPLY2" gate="G$1" x="68.58" y="73.66"/>
-<instance part="R1" gate="G$1" x="68.58" y="66.04" rot="R90"/>
-<instance part="R2" gate="G$1" x="60.96" y="58.42"/>
-<instance part="GND2" gate="1" x="91.44" y="48.26"/>
+<instance part="GND5" gate="1" x="83.82" y="152.4"/>
+<instance part="SUPPLY5" gate="G$1" x="91.44" y="149.86"/>
 <instance part="U$1" gate="G$1" x="104.14" y="2.54"/>
+<instance part="U1" gate="G$1" x="50.8" y="50.8"/>
+<instance part="R1" gate="G$1" x="78.74" y="55.88"/>
+<instance part="R2" gate="G$1" x="96.52" y="63.5" smashed="yes" rot="R90">
+<attribute name="NAME" x="99.06" y="66.04" size="1.778" layer="95"/>
+<attribute name="VALUE" x="99.06" y="60.96" size="1.778" layer="96"/>
+</instance>
+<instance part="C1" gate="G$1" x="71.12" y="43.18"/>
+<instance part="C2" gate="G$1" x="83.82" y="43.18"/>
+<instance part="SUPPLY1" gate="G$1" x="86.36" y="71.12"/>
+<instance part="SUPPLY2" gate="G$1" x="96.52" y="71.12"/>
+<instance part="GND1" gate="1" x="63.5" y="35.56"/>
+<instance part="GND2" gate="1" x="71.12" y="35.56"/>
+<instance part="GND3" gate="1" x="83.82" y="35.56"/>
 </instances>
 <busses>
 </busses>
 <nets>
 <net name="GND" class="0">
 <segment>
-<pinref part="J1" gate="J" pin="4"/>
-<wire x1="68.58" y1="147.32" x2="71.12" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="71.12" y1="147.32" x2="71.12" y2="154.94" width="0.1524" layer="91"/>
-<wire x1="71.12" y1="154.94" x2="76.2" y2="154.94" width="0.1524" layer="91"/>
-<wire x1="76.2" y1="154.94" x2="76.2" y2="152.4" width="0.1524" layer="91"/>
+<pinref part="J2" gate="J" pin="1"/>
+<wire x1="76.2" y1="149.86" x2="78.74" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="149.86" x2="78.74" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="157.48" x2="83.82" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="157.48" x2="83.82" y2="154.94" width="0.1524" layer="91"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="GND1"/>
+<wire x1="60.96" y1="55.88" x2="63.5" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="55.88" x2="63.5" y2="48.26" width="0.1524" layer="91"/>
+<pinref part="U1" gate="G$1" pin="GND4"/>
+<wire x1="63.5" y1="48.26" x2="63.5" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="48.26" x2="63.5" y2="48.26" width="0.1524" layer="91"/>
+<junction x="63.5" y="48.26"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="SW1" gate="G$1" pin="3"/>
-<wire x1="86.36" y1="58.42" x2="91.44" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="91.44" y1="58.42" x2="91.44" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="SW1" gate="G$1" pin="4"/>
-<wire x1="91.44" y1="55.88" x2="91.44" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="86.36" y1="55.88" x2="91.44" y2="55.88" width="0.1524" layer="91"/>
-<junction x="91.44" y="55.88"/>
+<pinref part="C1" gate="G$1" pin="2"/>
+<wire x1="71.12" y1="40.64" x2="71.12" y2="38.1" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C2" gate="G$1" pin="2"/>
+<wire x1="83.82" y1="40.64" x2="83.82" y2="38.1" width="0.1524" layer="91"/>
+<pinref part="GND3" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="VCC" class="0">
 <segment>
-<pinref part="J1" gate="J" pin="3"/>
-<wire x1="68.58" y1="144.78" x2="83.82" y2="144.78" width="0.1524" layer="91"/>
-<wire x1="83.82" y1="144.78" x2="83.82" y2="147.32" width="0.1524" layer="91"/>
+<pinref part="J2" gate="J" pin="2"/>
+<wire x1="76.2" y1="147.32" x2="91.44" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="91.44" y1="147.32" x2="91.44" y2="149.86" width="0.1524" layer="91"/>
+<pinref part="SUPPLY5" gate="G$1" pin="VCC"/>
+</segment>
+<segment>
+<pinref part="R1" gate="G$1" pin="2"/>
+<wire x1="83.82" y1="55.88" x2="86.36" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="55.88" x2="86.36" y2="71.12" width="0.1524" layer="91"/>
 <pinref part="SUPPLY1" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
-<pinref part="SUPPLY2" gate="G$1" pin="VCC"/>
-<pinref part="R1" gate="G$1" pin="2"/>
-<wire x1="68.58" y1="73.66" x2="68.58" y2="71.12" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="BTN" class="0">
-<segment>
-<pinref part="J1" gate="J" pin="1"/>
-<wire x1="68.58" y1="139.7" x2="71.12" y2="139.7" width="0.1524" layer="91"/>
-<label x="71.12" y="139.7" size="1.27" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="55.88" y1="58.42" x2="53.34" y2="58.42" width="0.1524" layer="91"/>
-<label x="53.34" y="58.42" size="1.27" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="N$1" class="0">
-<segment>
 <pinref part="R2" gate="G$1" pin="2"/>
-<pinref part="SW1" gate="G$1" pin="1"/>
-<wire x1="66.04" y1="58.42" x2="68.58" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="68.58" x2="96.52" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="SUPPLY2" gate="G$1" pin="VCC"/>
+</segment>
+</net>
+<net name="RX" class="0">
+<segment>
+<pinref part="J2" gate="J" pin="4"/>
+<wire x1="76.2" y1="142.24" x2="78.74" y2="142.24" width="0.1524" layer="91"/>
+<label x="78.74" y="142.24" size="1.27" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="VS"/>
+<wire x1="60.96" y1="53.34" x2="71.12" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="C1" gate="G$1" pin="1"/>
+<wire x1="71.12" y1="48.26" x2="71.12" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="71.12" y1="53.34" x2="71.12" y2="55.88" width="0.1524" layer="91"/>
+<junction x="71.12" y="53.34"/>
 <pinref part="R1" gate="G$1" pin="1"/>
-<wire x1="68.58" y1="58.42" x2="73.66" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="73.66" y1="58.42" x2="76.2" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="60.96" x2="68.58" y2="58.42" width="0.1524" layer="91"/>
-<junction x="68.58" y="58.42"/>
-<pinref part="SW1" gate="G$1" pin="2"/>
-<wire x1="76.2" y1="55.88" x2="73.66" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="73.66" y1="55.88" x2="73.66" y2="58.42" width="0.1524" layer="91"/>
-<junction x="73.66" y="58.42"/>
+<wire x1="71.12" y1="55.88" x2="73.66" y2="55.88" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="OUT" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="OUT"/>
+<wire x1="60.96" y1="50.8" x2="83.82" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="83.82" y1="50.8" x2="96.52" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="50.8" x2="96.52" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="C2" gate="G$1" pin="1"/>
+<wire x1="83.82" y1="48.26" x2="83.82" y2="50.8" width="0.1524" layer="91"/>
+<junction x="83.82" y="50.8"/>
+<wire x1="96.52" y1="50.8" x2="99.06" y2="50.8" width="0.1524" layer="91"/>
+<junction x="96.52" y="50.8"/>
+<label x="99.06" y="50.8" size="1.27" layer="95" xref="yes"/>
 </segment>
 </net>
 </nets>
