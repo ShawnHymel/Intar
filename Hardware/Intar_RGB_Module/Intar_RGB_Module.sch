@@ -12688,10 +12688,10 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 </polygon>
 </package>
 <package name="ASMT-YTB7-0AA02_M">
-<smd name="4" x="-2.2" y="1.675" dx="3.05" dy="2.05" layer="1" stop="no" cream="no"/>
+<smd name="4" x="-2.2" y="1.3" dx="3.05" dy="1.3" layer="1" stop="no" cream="no"/>
 <text x="-1.7" y="1.6" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-1.7" y="-2.1" size="0.4064" layer="27">&gt;Value</text>
-<smd name="3" x="2.2" y="1.675" dx="3.05" dy="2.05" layer="1" stop="no" cream="no"/>
+<smd name="3" x="2.2" y="1.3" dx="3.05" dy="1.3" layer="1" stop="no" cream="no"/>
 <smd name="2" x="2.2" y="0" dx="3.05" dy="0.5" layer="1" stop="no" cream="no"/>
 <smd name="1" x="2.2" y="-1.675" dx="3.05" dy="2.05" layer="1" stop="no" cream="no"/>
 <smd name="5" x="-2.2" y="0" dx="3.05" dy="0.5" layer="1" stop="no" cream="no"/>
@@ -12717,6 +12717,8 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <wire x1="-1.7" y1="-1.4" x2="1.7" y2="-1.4" width="0.2032" layer="21"/>
 <circle x="2.08209375" y="-1.48384375" radius="0.1" width="0.2032" layer="21"/>
 <rectangle x1="-2.275" y1="-2.7" x2="-0.2" y2="-1.65" layer="1"/>
+<rectangle x1="-3.725" y1="0.65" x2="-1.6" y2="2.7" layer="1"/>
+<rectangle x1="1.6" y1="0.65" x2="3.725" y2="2.7" layer="1"/>
 </package>
 </packages>
 <symbols>
