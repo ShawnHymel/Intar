@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -12687,6 +12687,37 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <vertex x="-0.752703125" y="-1.579475"/>
 </polygon>
 </package>
+<package name="ASMT-YTB7-0AA02_M">
+<smd name="4" x="-2.2" y="1.675" dx="3.05" dy="2.05" layer="1" stop="no" cream="no"/>
+<text x="-1.7" y="1.6" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-1.7" y="-2.1" size="0.4064" layer="27">&gt;Value</text>
+<smd name="3" x="2.2" y="1.675" dx="3.05" dy="2.05" layer="1" stop="no" cream="no"/>
+<smd name="2" x="2.2" y="0" dx="3.05" dy="0.5" layer="1" stop="no" cream="no"/>
+<smd name="1" x="2.2" y="-1.675" dx="3.05" dy="2.05" layer="1" stop="no" cream="no"/>
+<smd name="5" x="-2.2" y="0" dx="3.05" dy="0.5" layer="1" stop="no" cream="no"/>
+<smd name="6" x="-1.475" y="-1.675" dx="1.6" dy="2.05" layer="1" stop="no" cream="no"/>
+<rectangle x1="-3.725" y1="-2.8" x2="-2.675" y2="0.25" layer="1"/>
+<rectangle x1="0.575" y1="0.55" x2="2.375" y2="1.25" layer="29"/>
+<rectangle x1="0.675" y1="-0.25" x2="2.275" y2="0.25" layer="31"/>
+<rectangle x1="0.675" y1="-1.15" x2="2.275" y2="-0.65" layer="31"/>
+<rectangle x1="-2.275" y1="-1.15" x2="-0.675" y2="-0.65" layer="31"/>
+<rectangle x1="-2.275" y1="-0.25" x2="-0.675" y2="0.25" layer="31"/>
+<rectangle x1="-2.275" y1="0.65" x2="-0.675" y2="1.15" layer="31"/>
+<wire x1="-1.7" y1="1.4" x2="1.7" y2="1.4" width="0.127" layer="51"/>
+<wire x1="-1.7" y1="-1.4" x2="1.7" y2="-1.4" width="0.127" layer="51"/>
+<wire x1="-1.7" y1="-1.4" x2="-1.7" y2="1.4" width="0.127" layer="51"/>
+<wire x1="1.7" y1="-1.4" x2="1.7" y2="1.4" width="0.127" layer="51"/>
+<rectangle x1="0.675" y1="0.65" x2="2.275" y2="1.15" layer="31"/>
+<rectangle x1="0.575" y1="-0.35" x2="2.375" y2="0.35" layer="29"/>
+<rectangle x1="0.575" y1="-1.25" x2="2.375" y2="-0.55" layer="29"/>
+<rectangle x1="-2.375" y1="0.55" x2="-0.575" y2="1.25" layer="29"/>
+<rectangle x1="-2.375" y1="-0.35" x2="-0.575" y2="0.35" layer="29"/>
+<rectangle x1="-2.375" y1="-1.25" x2="-0.575" y2="-0.55" layer="29"/>
+<wire x1="-1.7" y1="1.4" x2="1.7" y2="1.4" width="0.2032" layer="21"/>
+<wire x1="-1.7" y1="-1.4" x2="1.7" y2="-1.4" width="0.2032" layer="21"/>
+<circle x="2.08209375" y="-1.48384375" radius="0.1" width="0.2032" layer="21"/>
+<rectangle x1="-2.275" y1="-2.7" x2="-0.2" y2="-1.65" layer="1"/>
+</package>
 </packages>
 <symbols>
 <symbol name="LP5521">
@@ -14472,6 +14503,19 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <technology name=""/>
 </technologies>
 </device>
+<device name="ASMT_M" package="ASMT-YTB7-0AA02_M">
+<connects>
+<connect gate="G$1" pin="B_A" pad="6"/>
+<connect gate="G$1" pin="B_C" pad="1"/>
+<connect gate="G$1" pin="G_A" pad="5"/>
+<connect gate="G$1" pin="G_C" pad="2"/>
+<connect gate="G$1" pin="R_A" pad="4"/>
+<connect gate="G$1" pin="R_C" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
 </devices>
 </deviceset>
 <deviceset name="LOGO">
@@ -15229,7 +15273,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R2" library="SparkFun-Resistors" deviceset="4.7KOHM-1/10W-1%(0603)" device="" value="4.7K"/>
 <part name="SJ1" library="SparkFun-Retired" deviceset="SOLDERJUMPER_2WAY" device="PASTE1&amp;2&amp;3"/>
 <part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="D1" library="Intar_Eagle_Library" deviceset="LED_RGB_6P" device="ASMT"/>
+<part name="D1" library="Intar_Eagle_Library" deviceset="LED_RGB_6P" device="ASMT_M" value="LED_RGB_6PASMT_M"/>
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SJ2" library="SparkFun-Retired" deviceset="SOLDERJUMPER_2WAY" device="PASTE2&amp;3"/>
 <part name="SJ3" library="SparkFun-Retired" deviceset="SOLDERJUMPER_2WAY" device="PASTE2&amp;3"/>
