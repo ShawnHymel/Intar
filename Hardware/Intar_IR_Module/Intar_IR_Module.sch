@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -15459,16 +15459,16 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <part name="STANDOFF1" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF2" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="OSHW-LOGO" device="S"/>
-<part name="J2" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
 <part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="U$1" library="Intar_Eagle_Library" deviceset="LOGO" device="SM"/>
+<part name="J1" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 <text x="155.956" y="6.35" size="2.54" layer="94">Shawn Hymel</text>
-<text x="238.76" y="7.62" size="2.54" layer="94">v01</text>
+<text x="238.76" y="7.62" size="2.54" layer="94">v02</text>
 <text x="66.04" y="135.89" size="1.778" layer="97">Grove</text>
 <text x="190.5" y="93.98" size="1.778" layer="97">Cut jumper to
 disable visible
@@ -15551,12 +15551,12 @@ LEDs</text>
 <instance part="STANDOFF1" gate="G$1" x="241.3" y="33.02"/>
 <instance part="STANDOFF2" gate="G$1" x="241.3" y="27.94"/>
 <instance part="LOGO1" gate="G$1" x="132.08" y="10.16"/>
-<instance part="J2" gate="J" x="68.58" y="143.51" smashed="yes">
-<attribute name="NAME" x="66.04" y="149.352" size="1.27" layer="95" ratio="10"/>
-</instance>
 <instance part="GND5" gate="1" x="81.28" y="149.86"/>
 <instance part="SUPPLY5" gate="G$1" x="88.9" y="147.32"/>
 <instance part="U$1" gate="G$1" x="104.14" y="2.54"/>
+<instance part="J1" gate="J" x="68.58" y="143.51" smashed="yes" rot="MR180">
+<attribute name="NAME" x="66.04" y="149.352" size="1.27" layer="95" ratio="10"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -15578,12 +15578,12 @@ LEDs</text>
 <wire x1="182.88" y1="78.74" x2="182.88" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J2" gate="J" pin="1"/>
 <wire x1="73.66" y1="147.32" x2="76.2" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="147.32" x2="76.2" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="154.94" x2="81.28" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="154.94" x2="81.28" y2="152.4" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
+<pinref part="J1" gate="J" pin="4"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -15603,10 +15603,10 @@ LEDs</text>
 <wire x1="195.58" y1="129.54" x2="195.58" y2="127" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J2" gate="J" pin="2"/>
 <wire x1="73.66" y1="144.78" x2="88.9" y2="144.78" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="144.78" x2="88.9" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="SUPPLY5" gate="G$1" pin="VCC"/>
+<pinref part="J1" gate="J" pin="3"/>
 </segment>
 </net>
 <net name="IR" class="0">
@@ -15616,9 +15616,9 @@ LEDs</text>
 <pinref part="R2" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="J2" gate="J" pin="3"/>
 <wire x1="73.66" y1="142.24" x2="76.2" y2="142.24" width="0.1524" layer="91"/>
 <label x="76.2" y="142.24" size="1.27" layer="95" xref="yes"/>
+<pinref part="J1" gate="J" pin="2"/>
 </segment>
 </net>
 <net name="LEDS" class="0">
@@ -15628,9 +15628,9 @@ LEDs</text>
 <label x="162.56" y="83.82" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J2" gate="J" pin="4"/>
 <wire x1="73.66" y1="139.7" x2="76.2" y2="139.7" width="0.1524" layer="91"/>
 <label x="76.2" y="139.7" size="1.27" layer="95" xref="yes"/>
+<pinref part="J1" gate="J" pin="1"/>
 </segment>
 </net>
 <net name="N$1" class="0">
