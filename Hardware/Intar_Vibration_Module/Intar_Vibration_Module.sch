@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -15359,7 +15359,6 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <part name="STANDOFF1" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF2" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="OSHW-LOGO" device="S"/>
-<part name="J2" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
 <part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="M1" library="Intar_Eagle_Library" deviceset="MOTOR" device="VIBE_COIN_SMD"/>
@@ -15372,6 +15371,7 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="U$1" library="Intar_Eagle_Library" deviceset="LOGO" device="SM"/>
+<part name="J1" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
 </parts>
 <sheets>
 <sheet>
@@ -15397,9 +15397,6 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <instance part="STANDOFF1" gate="G$1" x="241.3" y="33.02"/>
 <instance part="STANDOFF2" gate="G$1" x="241.3" y="27.94"/>
 <instance part="LOGO1" gate="G$1" x="132.08" y="10.16"/>
-<instance part="J2" gate="J" x="68.58" y="143.51" smashed="yes">
-<attribute name="NAME" x="66.04" y="149.352" size="1.27" layer="95" ratio="10"/>
-</instance>
 <instance part="GND5" gate="1" x="81.28" y="149.86"/>
 <instance part="SUPPLY5" gate="G$1" x="88.9" y="147.32"/>
 <instance part="M1" gate="G$1" x="83.82" y="71.12"/>
@@ -15420,18 +15417,21 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <instance part="GND1" gate="1" x="73.66" y="25.4"/>
 <instance part="GND2" gate="1" x="83.82" y="25.4"/>
 <instance part="U$1" gate="G$1" x="104.14" y="2.54"/>
+<instance part="J1" gate="J" x="68.58" y="143.51" smashed="yes" rot="MR180">
+<attribute name="NAME" x="66.04" y="149.352" size="1.27" layer="95" ratio="10"/>
+</instance>
 </instances>
 <busses>
 </busses>
 <nets>
 <net name="GND" class="0">
 <segment>
-<pinref part="J2" gate="J" pin="1"/>
 <wire x1="73.66" y1="147.32" x2="76.2" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="147.32" x2="76.2" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="154.94" x2="81.28" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="154.94" x2="81.28" y2="152.4" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
+<pinref part="J1" gate="J" pin="4"/>
 </segment>
 <segment>
 <pinref part="R2" gate="G$1" pin="1"/>
@@ -15446,10 +15446,10 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 </net>
 <net name="VCC" class="0">
 <segment>
-<pinref part="J2" gate="J" pin="2"/>
 <wire x1="73.66" y1="144.78" x2="88.9" y2="144.78" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="144.78" x2="88.9" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="SUPPLY5" gate="G$1" pin="VCC"/>
+<pinref part="J1" gate="J" pin="3"/>
 </segment>
 <segment>
 <pinref part="D1" gate="G$1" pin="C"/>
@@ -15464,9 +15464,9 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 </net>
 <net name="SIG" class="0">
 <segment>
-<pinref part="J2" gate="J" pin="4"/>
 <wire x1="73.66" y1="139.7" x2="76.2" y2="139.7" width="0.1524" layer="91"/>
 <label x="76.2" y="139.7" size="1.27" layer="95" xref="yes"/>
+<pinref part="J1" gate="J" pin="1"/>
 </segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>

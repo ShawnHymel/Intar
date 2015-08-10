@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -14412,7 +14412,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="STANDOFF1" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF2" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="OSHW-LOGO" device="S"/>
-<part name="J2" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
 <part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="U$1" library="Intar_Eagle_Library" deviceset="LOGO" device="SM"/>
@@ -14426,6 +14425,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="J1" library="Connector" deviceset="GROVE-4P-2.0" device="-3470130P1"/>
 </parts>
 <sheets>
 <sheet>
@@ -14450,9 +14450,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="STANDOFF1" gate="G$1" x="241.3" y="33.02"/>
 <instance part="STANDOFF2" gate="G$1" x="241.3" y="27.94"/>
 <instance part="LOGO1" gate="G$1" x="132.08" y="10.16"/>
-<instance part="J2" gate="J" x="71.12" y="146.05" smashed="yes">
-<attribute name="NAME" x="68.58" y="151.892" size="1.27" layer="95" ratio="10"/>
-</instance>
 <instance part="GND5" gate="1" x="83.82" y="152.4"/>
 <instance part="SUPPLY5" gate="G$1" x="91.44" y="149.86"/>
 <instance part="U$1" gate="G$1" x="104.14" y="2.54"/>
@@ -14469,18 +14466,21 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="GND1" gate="1" x="63.5" y="35.56"/>
 <instance part="GND2" gate="1" x="71.12" y="35.56"/>
 <instance part="GND3" gate="1" x="83.82" y="35.56"/>
+<instance part="J1" gate="J" x="71.12" y="146.05" smashed="yes" rot="MR180">
+<attribute name="NAME" x="68.58" y="151.892" size="1.27" layer="95" ratio="10"/>
+</instance>
 </instances>
 <busses>
 </busses>
 <nets>
 <net name="GND" class="0">
 <segment>
-<pinref part="J2" gate="J" pin="1"/>
 <wire x1="76.2" y1="149.86" x2="78.74" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="149.86" x2="78.74" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="157.48" x2="83.82" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="157.48" x2="83.82" y2="154.94" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
+<pinref part="J1" gate="J" pin="4"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="GND1"/>
@@ -14505,10 +14505,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="VCC" class="0">
 <segment>
-<pinref part="J2" gate="J" pin="2"/>
 <wire x1="76.2" y1="147.32" x2="91.44" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="91.44" y1="147.32" x2="91.44" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="SUPPLY5" gate="G$1" pin="VCC"/>
+<pinref part="J1" gate="J" pin="3"/>
 </segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="2"/>
@@ -14549,9 +14549,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="99.06" y="50.8" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J2" gate="J" pin="4"/>
 <wire x1="76.2" y1="142.24" x2="78.74" y2="142.24" width="0.1524" layer="91"/>
 <label x="78.74" y="142.24" size="1.27" layer="95" xref="yes"/>
+<pinref part="J1" gate="J" pin="1"/>
 </segment>
 </net>
 </nets>
