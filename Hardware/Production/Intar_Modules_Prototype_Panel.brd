@@ -36,7 +36,7 @@
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="51" name="tDocu" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
@@ -361,7 +361,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <library name="Connector">
 <packages>
 <package name="4P-2.0">
-<description>3470130P1</description>
 <wire x1="-5" y1="1" x2="-5" y2="-1" width="0.127" layer="21"/>
 <wire x1="5" y1="1.5" x2="5" y2="-1.5" width="0.254" layer="21"/>
 <wire x1="-5" y1="2.2" x2="-5" y2="-2.2" width="0.254" layer="21"/>
@@ -392,8 +391,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pad name="2" x="-1" y="0" drill="0.8" diameter="1.27"/>
 <pad name="3" x="1" y="0" drill="0.8" diameter="1.27"/>
 <pad name="4" x="3" y="0" drill="0.8" diameter="1.27"/>
-<text x="-1.905" y="2.54" size="0.889" layer="25" font="vector" ratio="11">&gt;NAME</text>
-<text x="-1.905" y="0" size="0.635" layer="27" font="vector" ratio="10">&gt;VALUE</text>
+<text x="-3.667" y="2.454" size="1.778" layer="25" font="vector" ratio="10">&gt;NAME</text>
+<text x="-4.699" y="-0.889" size="1.778" layer="27" font="vector" ratio="10">&gt;VALUE</text>
 </package>
 </packages>
 </library>
@@ -442,9 +441,13 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <wire x1="-2.4" y1="1.2" x2="-2.4" y2="0.4" width="0.127" layer="51"/>
 <wire x1="-2.4" y1="-0.2" x2="-2.4" y2="-1.2" width="0.127" layer="51"/>
 <wire x1="-2.4" y1="0.4" x2="-2" y2="0" width="0.127" layer="51"/>
+<wire x1="-3.1" y1="3.1" x2="-3.1" y2="-3.1" width="0.127" layer="51"/>
+<wire x1="3.1" y1="-3.1" x2="3.1" y2="3.1" width="0.127" layer="51"/>
+<wire x1="-3.1" y1="3.1" x2="3.1" y2="3.1" width="0.127" layer="51"/>
+<wire x1="-3.1" y1="-3.1" x2="3.1" y2="-3.1" width="0.127" layer="51"/>
 </package>
 <package name="LOGO_SM">
-<polygon width="0" layer="21">
+<polygon width="0.01" layer="21">
 <vertex x="0.77145" y="1.57528125"/>
 <vertex x="0.77145" y="1.134134375"/>
 <vertex x="0.7716" y="1.134084375"/>
@@ -2667,7 +2670,7 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <vertex x="0.7739375" y="1.574290625"/>
 <vertex x="0.77145" y="1.574903125"/>
 </polygon>
-<polygon width="0" layer="21">
+<polygon width="0.01" layer="21">
 <vertex x="-0.75255" y="-1.5796"/>
 <vertex x="-0.75255" y="-1.1383"/>
 <vertex x="-0.753821875" y="-1.137996875"/>
@@ -4909,7 +4912,7 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <vertex x="-0.7565375" y="-1.578103125"/>
 <vertex x="-0.7531875" y="-1.578940625"/>
 </polygon>
-<polygon width="0" layer="21">
+<polygon width="0.01" layer="21">
 <vertex x="-0.75255" y="-1.5796"/>
 <vertex x="-0.752221875" y="-1.579678125"/>
 <vertex x="-0.7485375" y="-1.580565625"/>

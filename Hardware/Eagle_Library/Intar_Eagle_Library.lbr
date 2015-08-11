@@ -368,7 +368,7 @@
 <wire x1="1.25" y1="-6.8" x2="1.25" y2="-4.9" width="0.2032" layer="21"/>
 </package>
 <package name="LOGO_SM">
-<polygon width="0" layer="21">
+<polygon width="0.01" layer="21">
 <vertex x="0.77145" y="1.57528125"/>
 <vertex x="0.77145" y="1.134134375"/>
 <vertex x="0.7716" y="1.134084375"/>
@@ -2591,7 +2591,7 @@
 <vertex x="0.7739375" y="1.574290625"/>
 <vertex x="0.77145" y="1.574903125"/>
 </polygon>
-<polygon width="0" layer="21">
+<polygon width="0.01" layer="21">
 <vertex x="-0.75255" y="-1.5796"/>
 <vertex x="-0.75255" y="-1.1383"/>
 <vertex x="-0.753821875" y="-1.137996875"/>
@@ -4833,7 +4833,7 @@
 <vertex x="-0.7565375" y="-1.578103125"/>
 <vertex x="-0.7531875" y="-1.578940625"/>
 </polygon>
-<polygon width="0" layer="21">
+<polygon width="0.01" layer="21">
 <vertex x="-0.75255" y="-1.5796"/>
 <vertex x="-0.752221875" y="-1.579678125"/>
 <vertex x="-0.7485375" y="-1.580565625"/>
