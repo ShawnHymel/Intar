@@ -6,11 +6,11 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="no" active="yes"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="yes"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
@@ -20,25 +20,25 @@
 <layer number="22" name="bPlace" color="14" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
-<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
-<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
-<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
-<layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="yes"/>
-<layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="yes"/>
-<layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="yes"/>
-<layer number="42" name="bRestrict" color="1" fill="10" visible="no" active="yes"/>
-<layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
-<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="yes" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="yes" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="51" name="tDocu" color="6" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
 <layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
 <layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
@@ -155,73 +155,9 @@
 <plain>
 <circle x="0" y="0" radius="13.335" width="0.2032" layer="51"/>
 <circle x="0" y="0" radius="9.4234" width="0.2032" layer="51"/>
-<text x="-28.448" y="-5.334" size="0.889" layer="21" font="vector" ratio="15" rot="R180" align="top-center">G</text>
-<text x="-26.416" y="-5.334" size="0.889" layer="21" font="vector" ratio="15" rot="R180" align="top-center">V</text>
-<text x="-24.384" y="-5.334" size="0.889" layer="21" font="vector" ratio="15" rot="R180" align="top-center">IR</text>
-<text x="-22.352" y="-5.334" size="0.889" layer="21" font="vector" ratio="15" rot="R180" align="top-center">L</text>
-<text x="-28.448" y="-8.89" size="0.889" layer="22" font="vector" ratio="15" rot="MR180" align="top-center">G</text>
-<text x="-26.416" y="-8.89" size="0.889" layer="22" font="vector" ratio="15" rot="MR180" align="top-center">V</text>
-<text x="-24.384" y="-8.89" size="0.889" layer="22" font="vector" ratio="15" rot="MR180" align="top-center">IR</text>
-<text x="-22.352" y="-8.89" size="0.889" layer="22" font="vector" ratio="15" rot="MR180" align="top-center">L</text>
-<polygon width="0.0254" layer="22">
-<vertex x="-25.146" y="18.669"/>
-<vertex x="-25.146" y="18.161"/>
-<vertex x="-25.654" y="18.161"/>
-<vertex x="-25.654" y="16.129"/>
-<vertex x="-25.146" y="16.129"/>
-<vertex x="-25.146" y="15.621"/>
-<vertex x="-26.67" y="15.621"/>
-<vertex x="-26.67" y="16.129"/>
-<vertex x="-26.162" y="16.129"/>
-<vertex x="-26.162" y="18.161"/>
-<vertex x="-26.67" y="18.161"/>
-<vertex x="-26.67" y="18.669"/>
-</polygon>
-<polygon width="0.0254" layer="22">
-<vertex x="-26.67" y="18.669"/>
-<vertex x="-26.67" y="15.621"/>
-<vertex x="-27.178" y="15.621"/>
-<vertex x="-27.178" y="16.891"/>
-<vertex x="-27.686" y="16.891"/>
-<vertex x="-27.686" y="15.621"/>
-<vertex x="-28.194" y="15.621"/>
-<vertex x="-28.194" y="18.669"/>
-<vertex x="-27.686" y="18.669"/>
-<vertex x="-27.686" y="17.399"/>
-<vertex x="-27.178" y="17.399"/>
-<vertex x="-27.178" y="18.669"/>
-</polygon>
-<polygon width="0.0254" layer="22">
-<vertex x="-28.194" y="18.669"/>
-<vertex x="-28.194" y="18.161"/>
-<vertex x="-28.702" y="18.161"/>
-<vertex x="-28.702" y="16.129"/>
-<vertex x="-28.194" y="16.129"/>
-<vertex x="-28.194" y="15.621"/>
-<vertex x="-29.718" y="15.621"/>
-<vertex x="-29.718" y="16.129"/>
-<vertex x="-29.21" y="16.129"/>
-<vertex x="-29.21" y="18.161"/>
-<vertex x="-29.718" y="18.161"/>
-<vertex x="-29.718" y="18.669"/>
-</polygon>
-<text x="-44.45" y="1.27" size="1.27" layer="22" font="vector" ratio="15" rot="MR0" align="center">Intar
-IR LED Module</text>
-<text x="-39.497" y="10.795" size="0.889" layer="22" font="vector" ratio="15" rot="MR0" align="center-left">Visible
-LEDs</text>
-<text x="-1.27" y="-22.86" size="1.778" layer="51" ratio="15">Shawn Hymel</text>
-<text x="-31.75" y="-3.556" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">R1</text>
-<text x="-31.75" y="3.556" size="0.8128" layer="21" font="vector" ratio="15" rot="R180" align="top-center">R2</text>
-<text x="-29.845" y="-1.651" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">R4</text>
-<text x="-27.94" y="-1.651" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">D2</text>
-<text x="-28.702" y="3.302" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">Q1</text>
-<text x="-22.098" y="3.302" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">Q2</text>
-<text x="-22.86" y="-1.651" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">D3</text>
-<text x="-25.4" y="3.81" size="0.8128" layer="21" font="vector" ratio="15" rot="R180" align="top-center">D1</text>
-<text x="-20.955" y="-1.651" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">R5</text>
-<text x="-19.05" y="3.556" size="0.8128" layer="21" font="vector" ratio="15" rot="R180" align="top-center">C1</text>
-<text x="-19.05" y="-3.556" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">R3</text>
-<text x="-46.355" y="-9.525" size="0.889" layer="22" font="vector" ratio="15" rot="MR0" align="center">v01</text>
+<text x="6.35" y="0" size="1.27" layer="22" font="vector" ratio="15" rot="SMR270" align="center">Intar
+Button Module</text>
+<text x="-1.27" y="-22.86" size="1.778" layer="51" font="vector" ratio="15">Shawn Hymel</text>
 <wire x1="8.89" y1="8.89" x2="8.89" y2="-8.89" width="0.254" layer="20"/>
 <wire x1="-8.89" y1="8.89" x2="-8.89" y2="-8.89" width="0.254" layer="20"/>
 <wire x1="-8.89" y1="8.89" x2="-1.575040625" y2="12.473309375" width="0.254" layer="20" curve="-37.803187"/>
@@ -232,6 +168,16 @@ LEDs</text>
 <wire x1="1.575040625" y1="-12.473309375" x2="-1.575040625" y2="-12.473309375" width="0.254" layer="20" curve="-68.534671"/>
 <dimension x1="-8.89" y1="8.89" x2="8.89" y2="8.89" x3="0" y3="20.32" textsize="1.778" textratio="15" layer="51" unit="inch"/>
 <dimension x1="0" y1="10.16" x2="0" y2="-10.16" x3="20.32" y3="0" textsize="1.778" textratio="15" layer="51" unit="inch"/>
+<text x="-2.286" y="-3.048" size="0.889" layer="22" font="vector" ratio="15" rot="SMR270" align="bottom-center">G</text>
+<text x="-2.286" y="-1.016" size="0.889" layer="22" font="vector" ratio="15" rot="SMR270" align="bottom-center">V</text>
+<text x="-2.286" y="3.048" size="0.889" layer="22" font="vector" ratio="15" rot="SMR270" align="bottom-center">BTN</text>
+<text x="-5.334" y="-3.048" size="0.889" layer="21" font="vector" ratio="15" rot="R90" align="top-center">G</text>
+<text x="-5.334" y="-1.016" size="0.889" layer="21" font="vector" ratio="15" rot="R90" align="top-center">V</text>
+<text x="-5.334" y="3.048" size="0.889" layer="21" font="vector" ratio="15" rot="R90" align="top-center">BTN</text>
+<text x="5.842" y="2.54" size="0.8128" layer="21" font="vector" ratio="15" rot="R90" align="top-center">R2</text>
+<text x="5.842" y="-2.54" size="0.8128" layer="21" font="vector" ratio="15" rot="R90" align="top-center">R1</text>
+<text x="3.302" y="0" size="0.8128" layer="21" font="vector" ratio="15" rot="R90" align="top-center">SW1</text>
+<text x="-6.604" y="-9.144" size="1.2192" layer="16" font="vector" ratio="15" rot="SMR35" align="center">v01</text>
 </plain>
 <libraries>
 <library name="SparkFun-Aesthetics">
@@ -8854,50 +8800,76 @@ design rules under a new name.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="FID1" library="SparkFun-Aesthetics" package="FIDUCIAL-1X2" value="FIDUCIAL1X2" x="-25.4" y="6.35"/>
-<element name="FID2" library="SparkFun-Aesthetics" package="FIDUCIAL-1X2" value="FIDUCIAL1X2" x="-22.86" y="-3.175"/>
+<element name="FID1" library="SparkFun-Aesthetics" package="FIDUCIAL-1X2" value="FIDUCIAL1X2" x="-7.62" y="7.62"/>
+<element name="FID2" library="SparkFun-Aesthetics" package="FIDUCIAL-1X2" value="FIDUCIAL1X2" x="7.62" y="-7.62"/>
 <element name="FRAME1" library="SparkFun-Aesthetics" package="CREATIVE_COMMONS" value="FRAME-LETTER" x="-33.02" y="-22.86"/>
 <element name="J1" library="Connector" package="4P-2.0" value="GROVE-4P-2.0-3470130P1" x="-6.35" y="0" rot="MR270"/>
-<element name="LOGO1" library="SparkFun-Aesthetics" package="OSHW-LOGO-S" value="OSHW-LOGOS" x="-46.355" y="-4.318" rot="MR0"/>
+<element name="LOGO1" library="SparkFun-Aesthetics" package="OSHW-LOGO-S" value="OSHW-LOGOS" x="5.08" y="8.255" rot="SMR270"/>
 <element name="STANDOFF1" library="SparkFun-Electromechanical" package="STAND-OFF" value="STAND-OFF" x="0" y="-10.16"/>
 <element name="STANDOFF2" library="SparkFun-Electromechanical" package="STAND-OFF" value="STAND-OFF" x="0" y="10.16"/>
-<element name="SW1" library="Intar_Eagle_Library" package="KSCXXXG" value="SWITCH_MOMENTARY" x="0" y="0" rot="R90"/>
+<element name="SW1" library="Intar_Eagle_Library" package="KSCXXXG" value="SWITCH_MOMENTARY" x="0" y="0" rot="R270"/>
 <element name="R1" library="SparkFun-Resistors" package="0603-RES" value="10K" x="5.08" y="-2.54" rot="R270">
 <attribute name="PROD_ID" value="RES-00824" x="5.08" y="-2.54" size="1.778" layer="27" font="vector" ratio="15" rot="R270" display="off"/>
 </element>
 <element name="R2" library="SparkFun-Resistors" package="0603-RES" value="100" x="5.08" y="2.54" rot="R270">
 <attribute name="PROD_ID" value="RES-07863" x="5.08" y="2.54" size="1.778" layer="27" font="vector" ratio="15" rot="R270" display="off"/>
 </element>
-<element name="U$1" library="Intar_Eagle_Library" package="LOGO_SM" value="LOGOSM" x="-16.51" y="11.43"/>
+<element name="U$1" library="Intar_Eagle_Library" package="LOGO_SM" value="LOGOSM" x="5.08" y="-8.255" rot="MR270"/>
 </elements>
 <signals>
-<signal name="GND" airwireshidden="yes">
+<signal name="GND">
 <contactref element="J1" pad="4"/>
-<via x="-19.812" y="-5.207" extent="1-16" drill="0.381"/>
 <contactref element="SW1" pad="4"/>
 <contactref element="SW1" pad="3"/>
-<wire x1="2" y1="2.9" x2="2" y2="-2.794" width="0" layer="19" extent="1-1"/>
-<wire x1="-19.812" y1="-5.207" x2="2" y2="2.9" width="0" layer="19" extent="1-1"/>
-<wire x1="-6.35" y1="-3" x2="-19.812" y2="-5.207" width="0" layer="19" extent="1-1"/>
+<polygon width="0.254" layer="1" isolate="0.3048">
+<vertex x="8.89" y="13.97"/>
+<vertex x="-8.89" y="13.97"/>
+<vertex x="-8.89" y="-13.97"/>
+<vertex x="8.89" y="-13.97"/>
+</polygon>
+<polygon width="0.254" layer="16" isolate="0.3048">
+<vertex x="-8.89" y="13.97"/>
+<vertex x="-8.89" y="-13.97"/>
+<vertex x="8.89" y="-13.97"/>
+<vertex x="8.89" y="13.97"/>
+</polygon>
+<via x="0" y="-5.08" extent="1-16" drill="0.381"/>
+<via x="0" y="5.08" extent="1-16" drill="0.381"/>
+<via x="6.985" y="0" extent="1-16" drill="0.381"/>
+<via x="6.985" y="8.255" extent="1-16" drill="0.381"/>
+<via x="-4.445" y="-8.255" extent="1-16" drill="0.381"/>
 </signal>
 <signal name="VCC">
 <contactref element="J1" pad="3"/>
 <contactref element="R1" pad="2"/>
-<wire x1="-6.35" y1="-1" x2="5.08" y2="-3.39" width="0" layer="19" extent="1-1"/>
+<wire x1="-6.35" y1="-1" x2="-4.588" y2="-1" width="0.254" layer="1"/>
+<wire x1="-4.588" y1="-1" x2="-3.81" y2="-1.778" width="0.254" layer="1"/>
+<wire x1="-3.81" y1="-1.778" x2="-3.81" y2="-5.08" width="0.254" layer="1"/>
+<wire x1="-3.81" y1="-5.08" x2="-2.413" y2="-6.477" width="0.254" layer="1"/>
+<wire x1="5.08" y1="-3.39" x2="5.08" y2="-5.334" width="0.254" layer="1"/>
+<wire x1="5.08" y1="-5.334" x2="3.81" y2="-6.604" width="0.254" layer="1"/>
+<wire x1="3.81" y1="-6.604" x2="-2.286" y2="-6.604" width="0.254" layer="1"/>
+<wire x1="-2.286" y1="-6.604" x2="-2.413" y2="-6.477" width="0.254" layer="1"/>
 </signal>
 <signal name="BTN">
 <contactref element="J1" pad="1"/>
 <contactref element="R2" pad="1"/>
-<wire x1="-6.35" y1="3" x2="5.08" y2="3.39" width="0" layer="19" extent="1-1"/>
+<wire x1="-6.35" y1="3" x2="-6.35" y2="5.08" width="0.254" layer="1"/>
+<wire x1="-6.35" y1="5.08" x2="-5.08" y2="6.35" width="0.254" layer="1"/>
+<wire x1="5.08" y1="3.39" x2="5.08" y2="5.08" width="0.254" layer="1"/>
+<wire x1="5.08" y1="5.08" x2="3.81" y2="6.35" width="0.254" layer="1"/>
+<wire x1="3.81" y1="6.35" x2="-5.08" y2="6.35" width="0.254" layer="1"/>
 </signal>
 <signal name="N$1">
 <contactref element="R2" pad="2"/>
 <contactref element="SW1" pad="1"/>
 <contactref element="R1" pad="1"/>
 <contactref element="SW1" pad="2"/>
-<wire x1="5.08" y1="-1.69" x2="5.08" y2="1.69" width="0" layer="19" extent="1-1"/>
-<wire x1="-2" y1="-2.9" x2="5.08" y2="-1.69" width="0" layer="19" extent="1-1"/>
-<wire x1="-2" y1="2.9" x2="-2" y2="-2.9" width="0" layer="19" extent="1-1"/>
+<wire x1="2" y1="2.9" x2="2" y2="0" width="0.254" layer="1"/>
+<wire x1="2" y1="0" x2="2" y2="-2.9" width="0.254" layer="1"/>
+<wire x1="5.08" y1="1.69" x2="5.08" y2="0" width="0.254" layer="1"/>
+<wire x1="5.08" y1="0" x2="2" y2="0" width="0.254" layer="1"/>
+<wire x1="5.08" y1="-1.69" x2="5.08" y2="0" width="0.254" layer="1"/>
 </signal>
 </signals>
 <errors>
