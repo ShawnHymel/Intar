@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="inch" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -36,7 +36,7 @@
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="51" name="tDocu" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
 <layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
@@ -180,6 +180,7 @@ Vibration Module</text>
 <text x="-3.683" y="-7.62" size="0.8128" layer="21" font="vector" ratio="15" rot="R90" align="top-center">R3</text>
 <text x="3.429" y="8.89" size="0.8128" layer="21" font="vector" ratio="15" rot="R270" align="top-center">Q1</text>
 <text x="2.54" y="-6.985" size="0.8128" layer="21" font="vector" ratio="15" align="top-center">Q1</text>
+<text x="-6.35" y="-9.144" size="1.2192" layer="16" font="vector" ratio="15" rot="SMR35" align="center">v01</text>
 </plain>
 <libraries>
 <library name="SparkFun-DiscreteSemi">
