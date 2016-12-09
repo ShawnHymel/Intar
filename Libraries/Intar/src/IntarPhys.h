@@ -35,10 +35,12 @@
 // IR LED pin constant
 #if defined(__AVR_ATmega328P__)
 # define IR_LED_PIN              3       // Pin 3 on Arduino UNO, Pro Mini, etc.
+#elif defined(__AVR_ATtiny84__)
+# define IR_LED_PIN              5       // PA5 (OC1B) on the ATtiny84/84a
 #elif defined(KINETISL)
 # define IR_LED_PIN              6       // Pin 6 on the Teensy LC
 #else
-#error Processor not supported
+# error Processor not supported
 #endif
 
 // Protocol parameters
@@ -112,6 +114,8 @@
 // Interrupt service routine
 #if defined(__AVR_ATmega328P__)
 ISR(TIMER2_OVF_vect);
+#elif defined(__AVR_ATtiny84__)
+ISR(TIM1_OVF_vect);
 #endif
 
 // IntarIR class
@@ -120,6 +124,8 @@ class IntarPhys {
     // The ISR is our friend! It can call our private functions
 #if defined(__AVR_ATmega328P__)
     friend void TIMER2_OVF_vect();
+#elif defined(__AVR_ATtiny84__)
+    friend void TIM1_OVF_vect();
 #elif defined(KINETISL)
     friend void ftm0_isr();
 #endif

@@ -3,21 +3,27 @@ PhysTransmit.ino
 Intar Infrared Transmit Test
 Shawn Hymel
 May 31, 2015
+Updated: December 9, 2016
 
 Test the Intar's ability to send data over the IR link. Press
 the attached button to send shot packets. Note that the IR LED
 is hardcoded in the IntarIR library. This is because it is 
 attached to a specific timer (e.g. FTM0).
 
-Hardware Connections (Teensy):
-
- Teensy LC Pin 6 -> IR LED
- Teensy LC Pin 2 -> Button
- 
 Hardware Connections (328p):
 
  Arduino Pin 3 -> IR LED
  Arduino Pin 2 -> Button
+ 
+Hardware Connections (ATtiny84a):
+
+ Arduino Pin 5 (PA5) -> IR LED
+ Arduino Pin 6 (PA6) -> Button
+ 
+Hardware Connections (Teensy):
+
+ Teensy LC Pin 6 -> IR LED
+ Teensy LC Pin 2 -> Button
  
 Resources:
 Include IntarPhys.h
@@ -40,11 +46,21 @@ THE SOFTWARE.
 #include <IntarPhys.h>
 
 // Constants
+#define DEBUG           0
 #define SEMI_AUTO       0
 #define FULL_AUTO       1
 
 // Pins
-const int trigger_pin = 2;
+#if defined(__AVR_ATmega328P__)
+    const int trigger_pin = 2;
+#elif defined(__AVR_ATtiny84__)
+    const int trigger_pin = 6;
+#elif defined(KINETISL)
+    const int trigger_pin = 2;
+#else
+# error Processor not supported
+#endif
+
 
 // Shot packet message
 byte shot_packet[] = {0x10, 0xEF, 0x08, 0xF7};
@@ -66,17 +82,23 @@ void setup() {
   pinMode(trigger_pin, INPUT_PULLUP);
   
   // Start serial console for debugging
+#if DEBUG
   Serial.begin(9600);
+#endif
 
   // Initialize Intar system
   if ( Intar_Phys.begin() == false ) {
+#if DEBUG
     Serial.println(F("Could not start Intar IR."));
+#endif
     while(1);
   }
   
   // Enable transmitter
   Intar_Phys.enableTransmitter();
+#if DEBUG
   Serial.println(F("Transmitter initialized. Fire away!"));
+#endif
 }
 
 void loop() {
@@ -95,7 +117,9 @@ void loop() {
           button_state = button_sample;
           if ( button_state == LOW ) {
             Intar_Phys.xmit(shot_packet, shot_packet_size);
+#if DEBUG
             Serial.println("pew");
+#endif
           }
         }
       }
@@ -106,7 +130,9 @@ void loop() {
     case FULL_AUTO:
       if ( digitalRead(trigger_pin) == LOW ) {
         Intar_Phys.xmit(shot_packet, shot_packet_size);
+#if DEBUG
         Serial.println("pew");
+#endif
       }
       break;
       

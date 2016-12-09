@@ -3,15 +3,21 @@ PhysReceive.ino
 Intar Infrared Receive Test
 Shawn Hymel
 June 13, 2015
+Updated: December 9, 2016
 
 Test the Intar's ability to receive data over the IR link. Send
 packets from a transmitter to see the results printed in the
 Serial monitor.
 
-Hardware Connections:
+Hardware Connections (328p):
 
  Pin 11 -> IR Receiver (38 kHz)
  Pin 13 -> LED (default on most Arduinos)
+
+Hardware Connections (ATtiny84a):
+
+ Arduino Pin 3 (PA3) -> IR Receiver (38 kHz)
+ Arduino Pin 7 (PA7) -> LED
  
 Resources:
 Include IntarPhys.h
@@ -33,9 +39,32 @@ THE SOFTWARE.
 
 #include <IntarPhys.h>
 
+// Constants
+#define DEBUG           1
+
+#if DEBUG
+# if defined(__AVR_ATtiny84__)
+#  include <SoftwareSerial.h>
+SoftwareSerial *dserial = new SoftwareSerial(2, 1); // Rx, Tx
+# else
+HardwareSerial *dserial = &Serial;
+# endif
+#endif
+
 // Pins
-const int receiver_pin = 11;
-const int hit_pin = 13;
+#if defined(__AVR_ATmega328P__)
+  const int receiver_pin = 11;
+  const int hit_pin = 13;
+#elif defined(__AVR_ATtiny84__)
+  const int receiver_pin = 3;
+  const int hit_pin = 7;
+#elif defined(KINETISL)
+  const int receiver_pin = 11;
+  const int hit_pin = 13;
+#else
+# error Processor not supported
+#endif
+
 
 // Shot packet message
 byte shot_packet[] = {0x10, 0xEF, 0x08, 0xF7};
@@ -48,7 +77,12 @@ uint8_t num_bytes;
 void setup() {
   
   // Start serial console for debugging
-  Serial.begin(9600);
+#if DEBUG
+  dserial->begin(9600);
+  dserial->println(F("Starting Intar..."));
+  dserial->print(F("F_CPU = "));
+  dserial->println(F_CPU);
+#endif
   
   // Set pin modes
   pinMode(receiver_pin, INPUT);
@@ -57,10 +91,14 @@ void setup() {
 
   // Initialize Intar system
   if ( Intar_Phys.begin(receiver_pin) == false ) {
-    Serial.println(F("Could not start Intar IR."));
+#if DEBUG
+    dserial->println(F("Could not start Intar IR."));
+#endif
     while(1);
   }
-  Serial.println(F("Receiver initialized. Don't tase me, bro!"));
+#if DEBUG
+  dserial->println(F("Receiver initialized. Don't tase me, bro!"));
+#endif
   
   // Enable receiver
   Intar_Phys.enableReceiver();
@@ -73,20 +111,28 @@ void loop() {
     memset(packet, 0, MAX_PACKET_SIZE);
     num_bytes = Intar_Phys.read(packet);
     if ( num_bytes == 0 ) {
-        Serial.println("PACKET EMPTY");
+#if DEBUG
+        dserial->println("PACKET EMPTY");
+#endif
     } else if ( num_bytes == RECV_ERROR ) {
-        Serial.println("RECV ERROR");
+#if DEBUG
+        dserial->println("RECV ERROR");
+#endif
     } else {
         for ( int i = 0; i < num_bytes; i++ ) {
-            Serial.print(packet[i], HEX);
-            Serial.print(" ");
+#if DEBUG
+            dserial->print(packet[i], HEX);
+            dserial->print(" ");
+#endif
             if ( memcmp(packet, shot_packet, num_bytes) == 0 ) {
               digitalWrite(hit_pin, HIGH);
               delay(10);
               digitalWrite(hit_pin, LOW);
             }
         }
-      Serial.println();
+#if DEBUG
+      dserial->println();
+#endif
     }
   }
 }
