@@ -94,6 +94,11 @@ bool IntarPhys::begin(uint8_t recv_pin /*= 0*/)
 
   // Enable Timer 1 overflow interrupt
   TIMSK1 = _BV(TOIE1);
+  
+  //***SRH***
+  // Clear at BOTTOM, set on match
+  TCCR1A |= _BV(COM1B1) | _BV(COM1B0);
+  pulse(false);
 
   // Enable global interrupts
   sei();
@@ -129,6 +134,9 @@ bool IntarPhys::begin(uint8_t recv_pin /*= 0*/)
     // Disable and transmitter receiver by default
     _xmit_enabled = false;
     _recv_enabled = false;
+    
+    //***SRH***
+    dstate = 0;
     
     return true;
 }
@@ -317,9 +325,11 @@ void IntarPhys::doXmit()
             _xmit_block_counter--;
             if ( _xmit_block_counter <= -1 ) {
                 pulse(false);
+                utime = micros();
                 _xmit_block_counter = SOM_SPACE_BLOCKS - 1;
             }
             if ( _xmit_block_counter == 0 ) {
+                dstate = micros() - utime;
                 _xmit_state = XMIT_STATE_MSG;
             }
             break;
@@ -411,7 +421,8 @@ void IntarPhys::pulse(bool on)
 #if defined(__AVR_ATmega328P__)
         TCCR2A |= _BV(COM2B1);
 #elif defined(__AVR_ATtiny84__)
-        TCCR1A |= _BV(COM1B1);
+        OCR1B = MOD_COUNTER_VAL >> 4;   // Set match to half max (50% PWM)
+        //TCCR1A |= _BV(COM1B1);
 #elif defined(KINETISL)
         *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(4);
 #endif
@@ -419,7 +430,8 @@ void IntarPhys::pulse(bool on)
 #if defined(__AVR_ATmega328P__)
         TCCR2A &= ~(_BV(COM2B1));
 #elif defined(__AVR_ATtiny84__)
-        TCCR1A &= ~(_BV(COM1B1));
+        OCR1B = MOD_COUNTER_VAL >> 3;   // Set match to max (0% PWM)
+        //TCCR1A &= ~(_BV(COM1B1));
 #elif defined(KINETISL)
         *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(1);
 #endif
@@ -513,7 +525,7 @@ void IntarPhys::doRecv()
             }
             break;
             
-        // Wait until th end of the pulse and check if it's a SOF pulse
+        // Wait until the end of the pulse and check if it's a SOF pulse
         case RECV_STATE_SOM_PULSE:
             if ( ir == RECV_SPACE ) {
                 

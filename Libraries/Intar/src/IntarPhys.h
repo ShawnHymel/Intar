@@ -142,6 +142,10 @@ public:
     uint8_t available();
     bool overflow();
     uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);
+    
+    //***SRH***
+    int dstate;
+    unsigned long utime;
 	
 private:
 
