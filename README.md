@@ -15,6 +15,7 @@ Documentation
 Version History
 ---------------
 
+* [H_0.0_L_0.2.0](https://github.com/ShawnHymel/Intar/tree/H_0.0_L_0.2.0) - Added ATtiny84 support to library
 * [H_0.0_L_0.1.0](https://github.com/ShawnHymel/Intar/tree/H_0.0_L_0.1.0) - First prototype of a working IR library
 
 License Information
