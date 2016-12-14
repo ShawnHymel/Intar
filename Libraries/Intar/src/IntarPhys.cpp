@@ -2,7 +2,7 @@
  * @file       IntarPhys.cpp
  * @brief      Library for the IR physical layer in Arduino-based laser tag
  * @author     Shawn Hymel
- * @copyright  2015 Shawn Hymel
+ * @copyright  2016 Shawn Hymel
  * @license    http://opensource.org/licenses/MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -80,8 +80,11 @@ bool IntarPhys::begin(uint8_t recv_pin /*= 0*/)
 
 #elif defined(__AVR_ATtiny84__)
 
-  // Use Timer 1 in Fast PWM mode, clear on match
-  TCCR1A = _BV(WGM11) | _BV(WGM10);
+  // Pre-load high byte with 0, as we know we won't need it
+  OCR1BH = 0;
+
+  // Use Timer 1 in Fast PWM mode, Clear at BOTTOM, set on match
+  TCCR1A = _BV(COM1B1) | _BV(COM1B0) | _BV(WGM11) | _BV(WGM10);
   
   // Reset timer on TOP (OCR1A), prescaler = 8
   TCCR1B = _BV(WGM13) | _BV(WGM12) | _BV(CS11);
@@ -92,12 +95,10 @@ bool IntarPhys::begin(uint8_t recv_pin /*= 0*/)
   // Set the PWM value to 50%
   OCR1B = MOD_COUNTER_VAL >> 4;   // #define won't divide nicely
 
-  // Enable Timer 1 overflow interrupt
-  TIMSK1 = _BV(TOIE1);
+  // Enable OCR1A match interrupt (TCNT1 reaches TOP = OCR1A)
+  TIMSK1 = _BV(OCIE1A);
   
-  //***SRH***
-  // Clear at BOTTOM, set on match
-  TCCR1A |= _BV(COM1B1) | _BV(COM1B0);
+  // Turn off output
   pulse(false);
 
   // Enable global interrupts
@@ -134,9 +135,6 @@ bool IntarPhys::begin(uint8_t recv_pin /*= 0*/)
     // Disable and transmitter receiver by default
     _xmit_enabled = false;
     _recv_enabled = false;
-    
-    //***SRH***
-    dstate = 0;
     
     return true;
 }
@@ -225,6 +223,7 @@ void IntarPhys::xmit(uint8_t data[], uint8_t len)
     
     // Set up flags and data counter
     _bytes_to_send = len;
+    
     _xmit_state = XMIT_STATE_SOM_PULSE;
 }
 
@@ -308,7 +307,7 @@ void IntarPhys::doXmit()
         case XMIT_STATE_WAITING:
             break;
             
-        // Start with SOF pulse
+        // Start with SOM pulse
         case XMIT_STATE_SOM_PULSE:
             _xmit_block_counter--;
             if ( _xmit_block_counter <= -1 ) {
@@ -325,12 +324,14 @@ void IntarPhys::doXmit()
             _xmit_block_counter--;
             if ( _xmit_block_counter <= -1 ) {
                 pulse(false);
-                utime = micros();
                 _xmit_block_counter = SOM_SPACE_BLOCKS - 1;
             }
             if ( _xmit_block_counter == 0 ) {
-                dstate = micros() - utime;
-                _xmit_state = XMIT_STATE_MSG;
+                if ( _xmit_ptr >= _bytes_to_send ) {
+                    _xmit_state = XMIT_STATE_EOM_PULSE;
+                } else {
+                    _xmit_state = XMIT_STATE_MSG;
+                }
             }
             break;
             
@@ -421,7 +422,7 @@ void IntarPhys::pulse(bool on)
 #if defined(__AVR_ATmega328P__)
         TCCR2A |= _BV(COM2B1);
 #elif defined(__AVR_ATtiny84__)
-        OCR1B = MOD_COUNTER_VAL >> 4;   // Set match to half max (50% PWM)
+        OCR1BL = MOD_COUNTER_VAL >> 4;   // Set match to half max (50% PWM)
         //TCCR1A |= _BV(COM1B1);
 #elif defined(KINETISL)
         *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(4);
@@ -430,7 +431,7 @@ void IntarPhys::pulse(bool on)
 #if defined(__AVR_ATmega328P__)
         TCCR2A &= ~(_BV(COM2B1));
 #elif defined(__AVR_ATtiny84__)
-        OCR1B = MOD_COUNTER_VAL >> 3;   // Set match to max (0% PWM)
+        OCR1BL = MOD_COUNTER_VAL >> 3;   // Set match to max (0% PWM)
         //TCCR1A &= ~(_BV(COM1B1));
 #elif defined(KINETISL)
         *portConfigRegister(IR_LED_PIN) = PORT_PCR_MUX(1);
@@ -652,7 +653,7 @@ ISR(TIMER2_OVF_vect)
     Intar_Phys.isr();
 }
 #elif defined(__AVR_ATtiny84__)
-ISR(TIM1_OVF_vect)
+ISR(TIM1_COMPA_vect) //ISR(TIM1_OVF_vect)
 {
     Intar_Phys.isr();
 }

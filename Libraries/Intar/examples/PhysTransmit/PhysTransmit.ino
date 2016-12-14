@@ -46,9 +46,19 @@ THE SOFTWARE.
 #include <IntarPhys.h>
 
 // Constants
-#define DEBUG           0
+#define DEBUG           1
 #define SEMI_AUTO       0
 #define FULL_AUTO       1
+
+// Create a pointer to the serial object (hardware or software)
+#if DEBUG
+# if defined(__AVR_ATtiny84__)
+#  include <SoftwareSerial.h>
+SoftwareSerial *dserial = new SoftwareSerial(2, 1); // Rx, Tx
+# else
+HardwareSerial *dserial = &Serial;
+# endif
+#endif
 
 // Pins
 #if defined(__AVR_ATmega328P__)
@@ -83,13 +93,13 @@ void setup() {
   
   // Start serial console for debugging
 #if DEBUG
-  Serial.begin(9600);
+  dserial->begin(9600);
 #endif
 
   // Initialize Intar system
   if ( Intar_Phys.begin() == false ) {
 #if DEBUG
-    Serial.println(F("Could not start Intar IR."));
+    dserial->println(F("Could not start Intar IR."));
 #endif
     while(1);
   }
@@ -97,7 +107,7 @@ void setup() {
   // Enable transmitter
   Intar_Phys.enableTransmitter();
 #if DEBUG
-  Serial.println(F("Transmitter initialized. Fire away!"));
+  dserial->println(F("Transmitter initialized. Fire away!"));
 #endif
 }
 
@@ -118,7 +128,7 @@ void loop() {
           if ( button_state == LOW ) {
             Intar_Phys.xmit(shot_packet, shot_packet_size);
 #if DEBUG
-            Serial.println("pew");
+            dserial->println("pew");
 #endif
           }
         }
@@ -131,7 +141,7 @@ void loop() {
       if ( digitalRead(trigger_pin) == LOW ) {
         Intar_Phys.xmit(shot_packet, shot_packet_size);
 #if DEBUG
-        Serial.println("pew");
+        dserial->println("pew");
 #endif
       }
       break;

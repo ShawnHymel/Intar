@@ -2,7 +2,7 @@
  * @file       IntarPhys.h
  * @brief 	   Library for the IR physical layer in Arduino-based laser tag
  * @author     Shawn Hymel
- * @copyright  2015 Shawn Hymel
+ * @copyright  2016 Shawn Hymel
  * @license    http://opensource.org/licenses/MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -115,7 +115,7 @@
 #if defined(__AVR_ATmega328P__)
 ISR(TIMER2_OVF_vect);
 #elif defined(__AVR_ATtiny84__)
-ISR(TIM1_OVF_vect);
+ISR(TIM1_COMPA_vect);
 #endif
 
 // IntarIR class
@@ -125,7 +125,7 @@ class IntarPhys {
 #if defined(__AVR_ATmega328P__)
     friend void TIMER2_OVF_vect();
 #elif defined(__AVR_ATtiny84__)
-    friend void TIM1_OVF_vect();
+    friend void TIM1_COMPA_vect();
 #elif defined(KINETISL)
     friend void ftm0_isr();
 #endif
@@ -139,18 +139,14 @@ public:
     void enableReceiver();
     void disableReceiver();
     void xmit(uint8_t data[], uint8_t len);
+    void flushXmit();
     uint8_t available();
     bool overflow();
     uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);
-    
-    //***SRH***
-    int dstate;
-    unsigned long utime;
 	
 private:
 
     // IR transmission
-    void flushXmit();
     void doXmit();
     void pulse(bool on);
     

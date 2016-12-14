@@ -2,7 +2,7 @@
  * @file       IntarIR.h
  * @brief 	   Library for the IR data link layer in Arduino-based laser tag
  * @author     Shawn Hymel
- * @copyright  2015 Shawn Hymel
+ * @copyright  2016 Shawn Hymel
  * @license    http://opensource.org/licenses/MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -44,6 +44,7 @@ public:
     void disableTransmitter();
     void enableReceiver();
     void disableReceiver();
+    void flushTransmitter();
     void send(uint8_t data[], uint8_t len);
     uint8_t available();
     uint8_t read(uint8_t packet[MAX_PACKET_SIZE]);

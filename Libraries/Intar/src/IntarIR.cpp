@@ -2,7 +2,7 @@
  * @file       IntarIR.cpp
  * @brief      Library for the IR data link layer in Arduino-based laser tag
  * @author     Shawn Hymel
- * @copyright  2015 Shawn Hymel
+ * @copyright  2016 Shawn Hymel
  * @license    http://opensource.org/licenses/MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -85,6 +85,14 @@ void IntarIR::enableReceiver()
 void IntarIR::disableReceiver()
 {
     Intar_Phys.disableReceiver();
+}
+
+/**
+ * @brief Do nothing until all data has been transmitted
+ */
+void IntarIR::flushTransmitter()
+{
+    Intar_Phys.flushXmit();
 }
 
 /**

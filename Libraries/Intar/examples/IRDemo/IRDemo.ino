@@ -3,6 +3,7 @@ IRDemo.ino
 Intar Infrared Demo
 Shawn Hymel
 July 15, 2015
+Updated: December 14, 2016
 
 Demo sketch that sends and receives packets. Play a mini-tag
 game. 25 HP, semi-auto, 5 damage shots. Health recharges after
@@ -15,6 +16,13 @@ Hardware Connections (328p):
  Pin 3 -> IR LED (hard-coded)
  Pin 9 -> Status LED (PWM)
  Pin 11 -> IR Receiver (38 kHz)
+
+Hardware Connections (ATtiny84a):
+
+ Arduino Pin 6 (PA6) -> Trigger
+ Arduino Pin 5 (PA5) -> IR LED (hard-coded)
+ Arduino Pin 7 (PA7) -> Status LED (PWM)
+ Arduino Pin 3 (PA3) -> IR Receiver (38 kHz)
 
 Hardware Connections (Teensy LC):
 
@@ -42,6 +50,19 @@ THE SOFTWARE.
 ****************************************************************/
 
 #include <IntarIR.h>
+
+// Constants
+#define DEBUG           0 // 1 for debugging over Serial
+#define SHOOT_YOURSELF  0 // 1 to allow xmit and rcv at same time
+
+#if DEBUG
+# if defined(__AVR_ATtiny84__)
+#  include <SoftwareSerial.h>
+SoftwareSerial *dserial = new SoftwareSerial(2, 1); // Rx, Tx
+# else
+HardwareSerial *dserial = &Serial;
+# endif
+#endif
                    
 // Game constants
 const int SEMI_AUTO = 0;          // One trigger, one shot
@@ -61,9 +82,22 @@ const int TIME_RESPAWN = 10;      // Seconds to respawn
 const int FIRE_MODE = SEMI_AUTO;  // How the trigger works
 
 // Pins
-const int TRIGGER_PIN = 2;        // Push this to shoot
-const int STATUS_PIN = 9;         // Shows current HP (brightness)
-const int RECEIVER_PIN = 11;      // Aim for this
+#if defined(__AVR_ATmega328P__)
+  const int TRIGGER_PIN = 2;        // Push this to shoot
+  const int STATUS_PIN = 9;         // Shows current HP (brightness)
+  const int RECEIVER_PIN = 11;      // Aim for this
+#elif defined(__AVR_ATtiny84__)
+  const int TRIGGER_PIN = 6;        // Push this to shoot
+  const int STATUS_PIN = 7;         // Shows current HP (brightness)
+  const int RECEIVER_PIN = 3;       // Aim for this
+#elif defined(KINETISL)
+  const int TRIGGER_PIN = 2;        // Push this to shoot
+  const int STATUS_PIN = 9;         // Shows current HP (brightness)
+  const int RECEIVER_PIN = 11;      // Aim for this
+#else
+# error Processor not supported
+#endif
+
 
 // Button states (for debouncing the trigger)
 uint8_t button_sample = HIGH;
@@ -85,7 +119,9 @@ int hp;
 void setup() {
   
   // Start serial console for debugging
-  Serial.begin(9600);
+#if DEBUG
+  dserial->begin(9600);
+#endif
     
   // Initialize pins
   pinMode(TRIGGER_PIN, INPUT_PULLUP);
@@ -111,7 +147,9 @@ void setup() {
   recharge_flag = false;
   
   // Let the user know we can begin
-  Serial.println("Initialized. There can only be one!");
+#if DEBUG
+  dserial->println("Initialized. There can only be one!");
+#endif
 }
 
 void loop() {
@@ -127,8 +165,10 @@ void loop() {
   if ( damage > 0 ) {
     time_since_hit = millis();
     recharge_flag = true;
-    Serial.print("HP: ");
-    Serial.println(hp);
+#if DEBUG
+    dserial->print("HP: ");
+    dserial->println(hp);
+#endif
   }
   
   // Update status LED
@@ -140,13 +180,19 @@ void loop() {
   if ( hp <= 0 ) {
     intar_ir.disableTransmitter();
     intar_ir.disableReceiver();
-    Serial.print("You are dead. Respawning in: ");
+#if DEBUG
+    dserial->print("You are dead. Respawning in: ");
+#endif
     for ( uint8_t i = 0; i < TIME_RESPAWN; i++ ) {
-      Serial.print(TIME_RESPAWN - i);
-      Serial.print(" ");
+#if DEBUG
+      dserial->print(TIME_RESPAWN - i);
+      dserial->print(" ");
+#endif
       delay(1000);
     }
-    Serial.println("Go!");
+#if DEBUG
+    dserial->println("Go!");
+#endif
     hp = HP_MAX;
     recharge_flag = false;
     intar_ir.enableTransmitter();
@@ -158,8 +204,10 @@ void loop() {
        (millis() - time_since_hit >= (TIME_RECHARGE * 1000)) ) {
     hp = HP_MAX;
     recharge_flag = false;
-    Serial.print("Recharged! HP: ");
-    Serial.println(hp);
+#if DEBUG
+    dserial->print("Recharged! HP: ");
+    dserial->println(hp);
+#endif
   }
   
   // Fire packets
@@ -205,7 +253,9 @@ void handleTrigger(uint8_t fire_mode) {
           button_state = button_sample;
           if ( button_state == LOW ) {
             fire(DAMAGE_AMOUNT, DAMAGE_ELEMENT);
-            Serial.println("pew");
+#if DEBUG
+            dserial->println("pew");
+#endif
           }
         }
       }
@@ -224,7 +274,9 @@ void handleTrigger(uint8_t fire_mode) {
           if ( button_state == LOW ) {
             for ( uint8_t i = 0; i < 3; i++ ) {
               fire(DAMAGE_AMOUNT, DAMAGE_ELEMENT);
-              Serial.println("pew");
+#if DEBUG
+              dserial->println("pew");
+#endif
             }
           }
         }
@@ -236,7 +288,9 @@ void handleTrigger(uint8_t fire_mode) {
     case FULL_AUTO:
       if ( digitalRead(TRIGGER_PIN) == LOW ) {
         fire(DAMAGE_AMOUNT, DAMAGE_ELEMENT);
-        Serial.println("pew");
+#if DEBUG
+        dserial->println("pew");
+#endif
       }
       break;
       
@@ -256,5 +310,12 @@ void fire(uint8_t damage, uint8_t element) {
   shot_packet[3] = damage;              // Last byte is damage
   
   // Fire!
+#if !SHOOT_YOURSELF
+  intar_ir.disableReceiver();
+#endif
   intar_ir.send(shot_packet, SHOT_PACKET_SIZE);
+#if !SHOOT_YOURSELF
+  intar_ir.flushTransmitter();
+  intar_ir.enableReceiver();
+#endif
 }
